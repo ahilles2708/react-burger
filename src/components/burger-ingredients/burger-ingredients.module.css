@@ -1,0 +1,26 @@
+.ingredientsListBlock {
+    max-height: 600px;
+    overflow-y: scroll;
+    scrollbar-width: thin;
+    scrollbar-color: #8585AD #2F2F37;
+}
+
+.typeCaption {
+    display: block;
+}
+
+.ingredientsList {
+    width: 100%;
+    display: flex;
+    flex-wrap: wrap;
+    flex-direction: row;
+    justify-content: start;
+    box-sizing: border-box;
+}
+.itemIngredient {
+    width: 50%;
+    list-style-type: none;
+}
+.ingredientsListBlock::-webkit-scrollbar-thumb {
+    height: 492px;
+}

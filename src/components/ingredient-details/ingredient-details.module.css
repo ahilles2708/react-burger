@@ -1,0 +1,26 @@
+.detailsContainer {
+    width: 100%;
+    max-width: 520px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.detailsTreasure {
+    width: 100%;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    gap: 20px;
+}
+
+.detailsTreasureItem {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.detailsImg {
+    width: 480px;
+    height: 240px;
+}

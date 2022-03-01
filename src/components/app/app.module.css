@@ -1,0 +1,14 @@
+.mainContainer {
+  max-width: 1240px;
+  margin: 0 auto;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-content: stretch;
+  gap: 40px;
+}
+
+.mainCol {
+  width: 50%;
+  max-width: 600px;
+}
