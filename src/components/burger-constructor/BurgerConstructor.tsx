@@ -36,10 +36,10 @@ export default function BurgerConstructor (props: any) {
                 <li className={styles.fillingItem + ' mb-4'}>
                     <ul className={styles.fillingInnerList}>
                         {filling.map(
-                            (item: any, index: any) => {
+                            (item: any) => {
                                 if(item.type !== "bun"){
                                     return (
-                                        <li key={index} className={styles.fillingItem + ' mb-4'}>
+                                        <li key={item._id} className={styles.fillingItem + ' mb-4'}>
                                             <BurgerConstructorElement item={item} />
                                         </li>
                                     )

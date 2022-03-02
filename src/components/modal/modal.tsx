@@ -38,6 +38,8 @@ export default function Modal (props: any) {
     )
 }
 
-ModalOverlay.propTypes = {
-    toggle: PropTypes.func.isRequired
+Modal.propTypes = {
+    toggle: PropTypes.func.isRequired,
+    caption: PropTypes.string.isRequired,
+    children: PropTypes.element.isRequired
 }

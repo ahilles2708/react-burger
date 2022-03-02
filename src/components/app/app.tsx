@@ -4,10 +4,10 @@ import AppHeader from '../app-header/app-header';
 import BurgerIngredients from '../burger-ingredients/BurgerIngredients';
 import BurgerConstructor from '../burger-constructor/BurgerConstructor';
 import PropTypes from 'prop-types';
+import { checkServerIdentity } from 'tls';
 
 export default function App() {
   const apiURL = 'https://norma.nomoreparties.space/api/ingredients';
-
 
   const[state, setState] = useState({
     isLoading: false,
@@ -15,12 +15,19 @@ export default function App() {
     data: [],
   });
 
+  function checkResponce(res: any){
+    if(res.ok){
+      return res.json();
+    }
+    return Promise.reject(`Ошибка ${res.status}`);
+  }
+
   useEffect(
     () => {
       const getData = () => {
         setState({...state, isLoading: true});
         fetch(apiURL)
-          .then(response => response.json())
+          .then(checkResponce)
           .then(res => setState({...state, isLoading: false, data: res.data}))
           .catch(
             e => {
