@@ -43,7 +43,7 @@ export default function BurgerIngredients (items: any) {
                         buns.map(
                             (item: any, index: any) => {
                             return(
-                                <li className={styles.itemIngredient + ' mb-8'} key={index}>
+                                <li className={styles.itemIngredient + ' mb-8'} key={item._id}>
                                     <BurgerIngredientsItem item={item}/>
                                 </li>
                                 
