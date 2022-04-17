@@ -1,0 +1,24 @@
+.fillingInnerList{
+    display: block;
+}
+
+.fillingInnerList{
+    max-height: 464px;
+    overflow-y: scroll;
+    scrollbar-width: thin;
+    scrollbar-color: #8585AD #2F2F37;
+}
+
+.fillingItem {
+    list-style-type: none;
+}
+
+.counting {
+    width: 100%;
+    display: flex;
+    justify-content: end;
+    align-items: center;
+}
+.fillingInnerList::-webkit-scrollbar-thumb {
+    height: 292px;
+}
