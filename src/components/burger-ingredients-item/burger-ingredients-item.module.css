@@ -27,3 +27,7 @@
     justify-content: center;
     min-height: 48px;
 }
+
+.itDragging {
+    border: 2px solid red;
+}

@@ -1,0 +1,15 @@
+.typeCaption {
+    display: block;
+}
+.ingredientsList {
+    width: 100%;
+    display: flex;
+    flex-wrap: wrap;
+    flex-direction: row;
+    justify-content: start;
+    box-sizing: border-box;
+}
+.itemIngredient {
+    width: 50%;
+    list-style-type: none;
+}

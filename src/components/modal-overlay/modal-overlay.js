@@ -2,7 +2,7 @@ import React from 'react';
 import styles from './modal-overlay.module.css';
 import PropTypes from 'prop-types';
 
-export default function ModalOverlay(props: any){
+export default function ModalOverlay(props){
 
     const closeThisModal = () =>{
         props.toggle(false);
