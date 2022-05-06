@@ -5,15 +5,15 @@ import styles from './modal.module.css';
 import { CloseIcon } from '@ya.praktikum/react-developer-burger-ui-components';
 import PropTypes from 'prop-types';
 
-export default function Modal (props: any) {
+export default function Modal (props) {
 
     const closeThisModal = () =>{
-        props.toggle(false);
+        props.toggle();
     }
 
     const escFunction = React.useCallback((event) => {
         if (event.key === "Escape") {
-            props.toggle(false);
+            props.toggle();
         }
     }, []);
 
@@ -34,7 +34,7 @@ export default function Modal (props: any) {
                 {props.children}
             </div>
         </>,
-        document.getElementById("modal")!
+        document.getElementById("modal")
     )
 }
 

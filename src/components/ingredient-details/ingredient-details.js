@@ -2,7 +2,7 @@ import React from 'react';
 import styles from './ingredient-details.module.css';
 import {itemPropTypes} from '../../utils/ingredientPropTypes';
 
-export default function IngredientDetails(props: any){
+export default function IngredientDetails(props){
     return(
         <div className={styles.detailsContainer}>
             <img className={styles.detailsImg + ' mb-4'} src={props.data.image_large}/>
