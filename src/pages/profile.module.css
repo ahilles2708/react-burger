@@ -1,0 +1,58 @@
+.profileContainer {
+    max-width: 1280px;
+    width: 100%;
+    display: flex;
+    flex-direction: row;
+    justify-content: flex-start;
+    gap: 60px;
+    margin: auto;
+    padding: 120px 0 0;
+    left: 0;
+    right: 0;
+}
+.profileNavBarContainer {
+    display: flex;
+    flex-direction: column;
+    gap: 80px;
+    width: 320px;
+}
+.profileNavBar {
+    list-style-type: none;
+}
+.profileNavBar li {
+    height: 64px;
+}
+.profileNavBar li * {
+    line-height: 64px;
+    text-decoration: none;
+    font-family: 'Jet Brains Mono';
+    font-style: normal;
+    font-weight: 700;
+    font-size: 24px;
+    padding: 0;
+}
+.profileNavBar li button {
+    color: var(--text-inactive-color);
+}
+.profileNavBarButton {
+    font-size: 20px;
+}
+.profileNavBarText {
+    font-family: 'Jet Brains Mono';
+    font-style: normal;
+    font-weight: 400;
+    font-size: 16px;
+    line-height: 24px;
+}
+.userInfo {
+    width: 480px;
+    display: flex;
+    flex-direction: column;
+    gap: 24px;
+}
+.userInfo > div {
+    width: 100% !important;
+}
+.userInfo > div > div {
+    width: 100% !important;
+}
