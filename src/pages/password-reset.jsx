@@ -1,10 +1,10 @@
-import React, { useEffect } from "react";
+import React from "react";
 import { Input, Button, PasswordInput } from "@ya.praktikum/react-developer-burger-ui-components";
 import styles from './form.module.css';
 import { useHistory } from 'react-router-dom';
 import { useSelector, useDispatch } from "react-redux";
 import { passwordReset, setPasswordResetFormValue } from '../services/actions/user';
-import { Link } from 'react-router-dom';
+import { Link, useLocation, Redirect } from 'react-router-dom';
 
 export function ResetPassword() {
     const {
@@ -12,19 +12,10 @@ export function ResetPassword() {
         token,
     } = useSelector(state => state.user.formPasswordForgot);
 
-    const { passwordResetRequest } = useSelector(state => state.user);
-    const { passwordResetSuccess } = useSelector(state => state.user);
-
+    const { isAuth, passwordResetRequest, passwordResetSuccess, passwordForgotSuccess } = useSelector(state => state.user);
+    const { state } = useLocation();
     const dispatch = useDispatch();
     const history = useHistory();
-
-    useEffect(
-        () => {
-            if(passwordResetSuccess){
-                history.replace({ pathname: '/login' })
-            };
-        }, [passwordResetSuccess]
-    )
 
     const onFormChange = (e) => {
         dispatch(setPasswordResetFormValue(e.target.name, e.target.value))
@@ -33,6 +24,24 @@ export function ResetPassword() {
     const onFormSubmit = (e) => {
         e.preventDefault();
         dispatch(passwordReset(e.target.name, e.target.value))
+    }
+
+    if (isAuth) {
+        return (
+          <Redirect to={ state?.from || '/' }/>
+        );
+    }
+
+    if (!passwordForgotSuccess) {
+        return (
+            <Redirect to={'/forgot-password'}/>
+        )
+    }
+
+    if (passwordResetSuccess) {
+        return (
+            <Redirect to={'/login'}/>
+        )
     }
 
     return (

@@ -8,6 +8,8 @@ import { useSelector, useDispatch } from 'react-redux';
 import { useDrop } from 'react-dnd';
 import { addItemToConstructor, CONSTRUCTOR_RESET } from '../../services/actions/burgerConstructor';
 import { RESET_ORDER, createOrder } from '../../services/actions/order';
+import { checkAccessToken } from '../../utils/utils';
+import { Redirect, useLocation, useHistory } from 'react-router-dom';
 
 export default function BurgerConstructor () {
     const dispatch = useDispatch();
@@ -15,6 +17,9 @@ export default function BurgerConstructor () {
     const {bun, items} = useSelector(store => store.burgerConstructor);
 
     const { orderRequest, orderFailing, orderNew, openOrderModal } = useSelector(store => store.order);
+    const { isAuth } = useSelector(store => store.user);
+    const location = useLocation();
+    const history = useHistory();
     
     const [open, setOpen] = React.useState(false);
     const  toggleModal = () => {
@@ -44,22 +49,23 @@ export default function BurgerConstructor () {
         if ( !bun || !items ){
             return;
         }
-        console.log({
-            "ingredients" : [
-                bun._id,
-                ...items.map((item) => item._id),
-                bun._id,
-            ]
-        });
-        dispatch(
-            createOrder({
-                "ingredients" : [
-                    bun._id,
-                    ...items.map((item) => item._id),
-                    bun._id,
-                ]
-            })
-        );
+        if ( isAuth && checkAccessToken){
+            dispatch(
+                createOrder({
+                    "ingredients" : [
+                        bun._id,
+                        ...items.map((item) => item._id),
+                        bun._id,
+                    ]
+                })
+            );
+        } else {
+            history.push({
+                pathname: '/login',
+                search: '?redirectUrl=' + location.pathname
+            });
+        }
+        
     };
 
     const closeOrderModal = () => {

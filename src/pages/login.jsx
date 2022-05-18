@@ -1,10 +1,11 @@
 import { useState } from "react";
 import { Input, Button } from "@ya.praktikum/react-developer-burger-ui-components";
 import styles from './form.module.css';
-import { Link } from 'react-router-dom';
+import { Link, useLocation, Redirect } from 'react-router-dom';
 import { useDispatch } from "react-redux";
 import { userLogIn, setLoginFormValue } from "../services/actions/user";
 import { useSelector } from "react-redux";
+import { checkAccessToken } from "../utils/utils";
 
 export function LoginPage() {
 
@@ -13,9 +14,12 @@ export function LoginPage() {
         password,
     } = useSelector(state => state.user.formLogin);
 
-    const { loginRequest } = useSelector(state => state.user);
+    const { isAuth, loginRequest } = useSelector(state => state.user);
+
+    const isAccessToken = checkAccessToken();
 
     const dispatch = useDispatch();
+    const { state } = useLocation();
 
     const onFormChange = (e) => {
         dispatch(setLoginFormValue(e.target.name, e.target.value))
@@ -23,7 +27,13 @@ export function LoginPage() {
 
     const onFormSubmit = (e) => {
         e.preventDefault();
-        dispatch(userLogIn(e.target.name, e.target.value))
+        dispatch(userLogIn(e.target.name, e.target.value));
+    }
+
+    if (isAuth && isAccessToken) {
+        return (
+          <Redirect to={ state ? state.from : '/' }/>
+        );
     }
 
     return (

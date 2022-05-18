@@ -4,17 +4,15 @@ import styles from './form.module.css';
 import { useHistory } from 'react-router-dom';
 import { useSelector, useDispatch } from "react-redux";
 import { passwordForgot, setPasswordForgotFormValue } from '../services/actions/user';
-import { Link } from 'react-router-dom';
+import { Link, useLocation, Redirect } from 'react-router-dom';
 
 export function ForgotPassword() {
 
     const {
         email,
     } = useSelector(state => state.user.formPasswordForgot);
-
-    const { passwordForgotRequest } = useSelector(state => state.user);
-    const { passwordForgotSuccess } = useSelector(state => state.user);
-
+    const { isAuth, passwordForgotRequest, passwordForgotSuccess } = useSelector(state => state.user);
+    const { state } = useLocation();
     const dispatch = useDispatch();
     const history = useHistory();
 
@@ -33,6 +31,12 @@ export function ForgotPassword() {
     const onFormSubmit = (e) => {
         e.preventDefault();
         dispatch(passwordForgot(e.target.name, e.target.value))
+    }
+
+    if (isAuth) {
+        return (
+          <Redirect to={ state?.from || '/' }/>
+        );
     }
     
     return (

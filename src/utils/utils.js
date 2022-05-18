@@ -1,4 +1,5 @@
 import { baseUrl } from "./constants";
+import jwt_decode from "jwt-decode";
 
 export function checkResponse(res){
     return res.ok ? res.json() : res.json().then((err)=> Promise.reject(err));
@@ -75,3 +76,15 @@ export const fetchWithRefresh = async (url, options) => {
     }
   }
 };
+
+export const checkAccessToken = () => {
+  const accessToken = getCookie('accessToken');
+  if (accessToken) {
+      const decodedToken = jwt_decode(accessToken);
+      const currentTime = new Date().getTime();
+      if (decodedToken.exp * 1000 < currentTime) {
+          return false;
+      }
+  }
+  return accessToken ? true : false;
+}

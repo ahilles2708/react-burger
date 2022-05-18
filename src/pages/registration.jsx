@@ -3,7 +3,7 @@ import { Input, Button, PasswordInput } from "@ya.praktikum/react-developer-burg
 import styles from './form.module.css';
 import { useDispatch, useSelector } from "react-redux";
 import { setRegistrationFormValue, userRegistration } from '../services/actions/user';
-import { Link } from 'react-router-dom';
+import { Link, useLocation, Redirect } from 'react-router-dom';
 
 export function RegistrationPage() {
     const {
@@ -12,7 +12,9 @@ export function RegistrationPage() {
         password,
     } = useSelector(state => state.user.formRegistration);
 
-    const { registrationRequest } = useSelector(state => state.user);
+    const { isAuth, registrationRequest } = useSelector(state => state.user);
+
+    const { state } = useLocation();
 
     const dispatch = useDispatch();
 
@@ -23,6 +25,12 @@ export function RegistrationPage() {
     const onFormSubmit = (e) => {
         e.preventDefault();
         dispatch(userRegistration());
+    }
+
+    if (isAuth) {
+        return (
+          <Redirect to={ state?.from || '/' }/>
+        );
     }
 
     return(

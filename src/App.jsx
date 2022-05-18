@@ -1,7 +1,12 @@
 import AppHeader from './components/app-header/app-header';
 import { Switch, Route, useLocation, useHistory } from 'react-router-dom';
-import { MainPage, LoginPage, ForgotPassword, ResetPassword, Profile, RegistrationPage, NotFound404 } from './pages';
+import { MainPage, LoginPage, ForgotPassword, ResetPassword, Profile, RegistrationPage, NotFound404, IngredientDetailPage } from './pages';
 import { useDispatch } from 'react-redux';
+import { ProtectedRoute } from './components/protected-route/protected-route';
+import Modal from './components/modal/modal';
+import IngredientDetails from './components/ingredient-details/ingredient-details';
+import { useEffect } from 'react';
+import { getIngredientsData } from './services/actions/burgerIngredients';
 
 export default function App() {
     const dispatch = useDispatch();
@@ -10,12 +15,16 @@ export default function App() {
 
     const background = location.state && location.state.background;
 
+    useEffect(() => {
+        dispatch(getIngredientsData())
+      }, [dispatch]);
+
     const closeModal = () => history.goBack();
 
     return (
         <>
             <AppHeader/>
-            <Switch>
+            <Switch location={background || location}>
                 <Route path='/' exact={true}>
                     <MainPage/>
                 </Route>
@@ -31,16 +40,31 @@ export default function App() {
                 <Route path='/reset-password' exact={true}>
                     <ResetPassword/>
                 </Route>
-                <Route path='/profile/orders-feed' exact={true}>
-                    test
+                <Route path='/ingredients/:id' exact={true}>
+                    <IngredientDetailPage/>
                 </Route>
-                <Route path='/profile' exact={true}>
+                <ProtectedRoute path='/profile/orders-feed' exact={true}>
+                    <NotFound404/>
+                </ProtectedRoute>
+                <ProtectedRoute path='/profile' exact={true}>
                     <Profile/>
-                </Route>
+                </ProtectedRoute>
                 <Route>
                     <NotFound404/>
                 </Route>
             </Switch>
+
+            {background && (
+                <Route path={'/ingredients/:id'}>
+                    <Modal
+                    caption="Детали ингредиента"
+                    toggle={closeModal}
+                    >
+                        <IngredientDetails />
+                    </Modal>
+                </Route>
+            )}
+
         </>
     )
 }
