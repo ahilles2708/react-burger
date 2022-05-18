@@ -1,12 +1,14 @@
-import AppHeader from './components/app-header/app-header';
+import AppHeader from '../app-header/app-header';
 import { Switch, Route, useLocation, useHistory } from 'react-router-dom';
-import { MainPage, LoginPage, ForgotPassword, ResetPassword, Profile, RegistrationPage, NotFound404, IngredientDetailPage } from './pages';
+import { MainPage, LoginPage, ForgotPassword, ResetPassword, Profile, RegistrationPage, NotFound404, IngredientDetailPage } from '../../pages';
 import { useDispatch } from 'react-redux';
-import { ProtectedRoute } from './components/protected-route/protected-route';
-import Modal from './components/modal/modal';
-import IngredientDetails from './components/ingredient-details/ingredient-details';
+import { ProtectedRoute } from '../protected-route/protected-route';
+import Modal from '../modal/modal';
+import IngredientDetails from '../ingredient-details/ingredient-details';
 import { useEffect } from 'react';
-import { getIngredientsData } from './services/actions/burgerIngredients';
+import { getIngredientsData } from '../../services/actions/burgerIngredients';
+import { userGetInfo } from '../../services/actions/user';
+import { checkAccessToken } from '../../utils/utils';
 
 export default function App() {
     const dispatch = useDispatch();
@@ -15,8 +17,13 @@ export default function App() {
 
     const background = location.state && location.state.background;
 
+    const isAccessToken = checkAccessToken();
+
     useEffect(() => {
         dispatch(getIngredientsData())
+        if (isAccessToken){
+            dispatch(userGetInfo());
+        }
       }, [dispatch]);
 
     const closeModal = () => history.goBack();

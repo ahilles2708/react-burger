@@ -10,7 +10,7 @@ export function ResetPassword() {
     const {
         password,
         token,
-    } = useSelector(state => state.user.formPasswordForgot);
+    } = useSelector(state => state.user.formPasswordReset);
 
     const { isAuth, passwordResetRequest, passwordResetSuccess, passwordForgotSuccess } = useSelector(state => state.user);
     const { state } = useLocation();

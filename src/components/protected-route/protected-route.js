@@ -4,24 +4,18 @@ import { checkAccessToken } from '../../utils/utils';
 import PropTypes from 'prop-types';
 
 export function ProtectedRoute({ path, exact, children }) {
-    const location = useLocation();
 
     const {
         isAuth,
     } = useSelector(state => state.user);
-
-    if(!checkAccessToken()){
-        return (
-            <Redirect to={{pathname: "/login", state: { from: location }}}/>
-        )
-    }
+    const isAccessToken = checkAccessToken();
 
     return (
         <Route
           path={path}
           exact={exact}
           render={({ location }) =>
-            isAuth ? (
+            (isAuth && isAccessToken) ? (
               children
             ) : (
               <Redirect

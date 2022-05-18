@@ -133,13 +133,13 @@ export const userLogIn = () => (dispatch, getState) => {
     .then(checkResponse)
     .then(result => {
         if(result && result.success) {
+            let accessToken = result.accessToken.split("Bearer ")[1];
+            setCookie("accessToken", accessToken);
+            localStorage.setItem("refreshToken", result.refreshToken);
             dispatch({
                 type: LOGIN_SUCCESS,
                 user: result.user,
             });
-            let accessToken = result.accessToken.split("Bearer ")[1];
-            setCookie("accessToken", accessToken);
-            localStorage.setItem("refreshToken", result.refreshToken);
         } else {
             dispatch({
                 type: LOGIN_FAILED,
@@ -162,7 +162,7 @@ export const userGetInfo = () => (dispatch) => {
     fetchWithRefresh(getUserInfoURL, {
         method: 'GET',
         mode: 'cors',
-        header: {
+        headers: {
             "Content-Type": "application/json;charset=utf-8",
             'Authorization': "Bearer " + getCookie("accessToken"),
         },
