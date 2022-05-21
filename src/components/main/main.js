@@ -1,15 +1,13 @@
 import React, {useState, useEffect} from 'react';
-import styles from './app.module.css';
-import AppHeader from '../app-header/app-header';
+import styles from './main.module.css';
 import BurgerIngredients from '../burger-ingredients/burger-ingredients';
 import BurgerConstructor from '../burger-constructor/burger-constructor';
 import { DndProvider } from 'react-dnd';
 import { HTML5Backend } from 'react-dnd-html5-backend';
 
-export default function App() {
+export default function Main() {
   return (
     <>
-      <AppHeader />
       <DndProvider backend={HTML5Backend}>
         <section className={styles.mainContainer}>
           <div className={styles.mainCol}>

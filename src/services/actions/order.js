@@ -1,5 +1,6 @@
 import { checkResponse } from '../../utils/utils';
 import { baseUrl } from '../../utils/constants';
+import { getCookie } from '../../utils/utils';
 
 export const CREATE_NEW_ORDER_REQUEST = 'CREATE_NEW_ORDER_REQUEST';
 export const CREATE_NEW_ORDER_FAILED = 'CREATE_NEW_ORDER_FAILED';
@@ -18,6 +19,7 @@ export function createOrder(data) {
             mode: 'cors',
             headers: {
                 'Content-Type': 'application/json',
+                'Authorization': "Bearer " + getCookie("accessToken"),
             },
             body: JSON.stringify(data),
         })

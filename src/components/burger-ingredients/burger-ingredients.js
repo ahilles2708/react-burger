@@ -2,23 +2,17 @@ import React, { useEffect, useMemo } from 'react';
 import { Tab } from '@ya.praktikum/react-developer-burger-ui-components';
 import styles from './burger-ingredients.module.css';
 import { useSelector, useDispatch } from 'react-redux';
-import { getIngredientsData } from '../../services/actions/burgerIngredients';
 import { useInView } from 'react-intersection-observer';
 import IngredientCategory from '../burger-ingredients-category/burger-ingredients-category';
 import Modal from '../modal/modal';
 import IngredientDetails from '../ingredient-details/ingredient-details';
 import { CLOSE_INGREDIENT_MODAL, OPEN_INGREDIENT_MODAL } from '../../services/actions/modal';
-import { modalReducer } from '../../services/reducers/modal';
 
 export default function BurgerIngredients () {
     const {data, dataRequest, dataFailed} = useSelector(store => store.ingredients);
     const needModalOpen = useSelector(store => store.modal.data);
     const dispatch = useDispatch();
   
-    useEffect(() => {
-      dispatch(getIngredientsData())
-    }, [dispatch]);
-
     const buns = useMemo(
         () => data.filter((item) => item.type === "bun"),
         [data]
