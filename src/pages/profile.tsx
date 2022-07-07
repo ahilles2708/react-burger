@@ -4,12 +4,14 @@ import { NavLink } from 'react-router-dom';
 import { Input, Button, PasswordInput, EmailInput } from "@ya.praktikum/react-developer-burger-ui-components";
 import { userLogOut, setProfileFormValue, userInfoPatch } from '../services/actions/user';
 import { useDispatch, useSelector } from 'react-redux';
+import { IState } from '../types';
+import { SyntheticEvent } from 'react';
 
-export function Profile() {
+const Profile = () => {
     const dispatch = useDispatch();
 
-    const nameInitial = useSelector(state => state.user.info.name);
-    const emailInitial = useSelector(state => state.user.info.email);
+    const nameInitial = useSelector((store: IState) => store.user.info.name);
+    const emailInitial = useSelector((store: IState) => store.user.info.email);
 
     useEffect(() => {
         dispatch(setProfileFormValue("name", nameInitial));
@@ -17,21 +19,21 @@ export function Profile() {
         }, [nameInitial, emailInitial]
     );    
 
-    const nameForPatch = useSelector(state => state.user.formProfile.name);
-    const emailForPatch = useSelector(state => state.user.formProfile.email);
-    const passwordForPatch = useSelector(state => state.user.formProfile.password);
+    const nameForPatch = useSelector((store: IState) => store.user.formProfile.name);
+    const emailForPatch = useSelector((store: IState) => store.user.formProfile.email);
+    const passwordForPatch = useSelector((store: IState) => store.user.formProfile.password);
 
-    const { userInfoPatchRequest } = useSelector(state => state.user);
+    const { userInfoPatchRequest } = useSelector((store: IState) => store.user);
 
-    const onFormChange = (e) => {
+    const onFormChange = (e: React.ChangeEvent<HTMLInputElement>) => {
         dispatch(setProfileFormValue(e.target.name, e.target.value))
     }
 
-    const buttonLogOut = (e) => {
+    const buttonLogOut = (e: SyntheticEvent<Element, Event>) => {
         dispatch(userLogOut)
     }
 
-    const onFormSubmit = (e) => {
+    const onFormSubmit = (e: React.FormEvent<HTMLFormElement>) => {
         e.preventDefault();
         dispatch(userInfoPatch());
     }
@@ -57,7 +59,7 @@ export function Profile() {
                         </NavLink>
                     </li>
                     <li>
-                        <Button className={styles.logOutButton + ' text text_color_inactive'} type="secondary" size="medium" onClick={buttonLogOut}>
+                        <Button type="secondary" size="medium" onClick={buttonLogOut}>
                             Выход
                         </Button>
                     </li>
@@ -83,3 +85,5 @@ export function Profile() {
         </section>
     )
 }
+
+export default Profile;

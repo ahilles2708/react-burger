@@ -1,7 +1,9 @@
 import Main from "../components/main/main";
 
-export function MainPage() {
+const MainPage = () => {
     return(
         <Main/>
     )
 }
+
+export default MainPage;

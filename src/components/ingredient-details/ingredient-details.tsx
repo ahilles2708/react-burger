@@ -2,12 +2,13 @@ import React from 'react';
 import styles from './ingredient-details.module.css';
 import { useParams } from 'react-router-dom';
 import { useSelector } from 'react-redux';
+import { IParams, IState } from '../../types';
 
-export default function IngredientDetails(){
+const IngredientDetails = () => {
 
-    const { id } = useParams();
+    const { id } = useParams<IParams>();
 
-    const { data, dataFailed } = useSelector(store => store.ingredients);
+    const { data, dataFailed } = useSelector((store: IState) => store.ingredients);
 
     const ingredientToShow = data.find(ingredient => ingredient._id === id);
 
@@ -42,3 +43,5 @@ export default function IngredientDetails(){
         )
     )
 }
+
+export default IngredientDetails;

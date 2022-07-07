@@ -2,7 +2,7 @@ import { NavLink, useRouteMatch } from 'react-router-dom';
 import { Logo, BurgerIcon, ListIcon, ProfileIcon } from '@ya.praktikum/react-developer-burger-ui-components';
 import styles from './app-header.module.css';
 
-export default function AppHeader() {
+const AppHeader = () => {
     const isMainPage = !!useRouteMatch({'path': '/', exact: true});
     const isProfile = !!useRouteMatch('/profile');
     const isOrders = !!useRouteMatch('/orders-feed');
@@ -38,3 +38,5 @@ export default function AppHeader() {
         </header>
     );
 };
+
+export default AppHeader;

@@ -5,25 +5,26 @@ import { useHistory } from 'react-router-dom';
 import { useSelector, useDispatch } from "react-redux";
 import { passwordReset, setPasswordResetFormValue } from '../services/actions/user';
 import { Link, useLocation, Redirect } from 'react-router-dom';
+import { ILocationStateFrom, IState } from "../types";
 
-export function ResetPassword() {
+const ResetPassword = () => {
     const {
         password,
         token,
-    } = useSelector(state => state.user.formPasswordReset);
+    } = useSelector((store: IState) => store.user.formPasswordReset);
 
-    const { isAuth, passwordResetRequest, passwordResetSuccess, passwordForgotSuccess } = useSelector(state => state.user);
-    const { state } = useLocation();
+    const { isAuth, passwordResetRequest, passwordResetSuccess, passwordForgotSuccess } = useSelector((store: IState) => store.user);
+    const { state } = useLocation<ILocationStateFrom>();
     const dispatch = useDispatch();
     const history = useHistory();
 
-    const onFormChange = (e) => {
+    const onFormChange = (e: React.ChangeEvent<HTMLInputElement>) => {
         dispatch(setPasswordResetFormValue(e.target.name, e.target.value))
     }
 
-    const onFormSubmit = (e) => {
+    const onFormSubmit = (e: React.FormEvent<HTMLFormElement>) => {
         e.preventDefault();
-        dispatch(passwordReset(e.target.name, e.target.value))
+        dispatch(passwordReset())
     }
 
     if (isAuth) {
@@ -70,3 +71,5 @@ export function ResetPassword() {
         </section>
     );
 }
+
+export default ResetPassword;

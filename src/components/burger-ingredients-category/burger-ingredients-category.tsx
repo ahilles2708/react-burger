@@ -1,20 +1,24 @@
-import React, { useMemo, forwardRef } from "react";
+import React, { useMemo, forwardRef, ForwardedRef } from "react";
 import { useSelector } from "react-redux";
+import { ICounters, IIngredientCategoryProps, IState } from "../../types";
 import BurgerIngredientsItem from '../burger-ingredients-item/burger-ingredients-item';
 import styles from './burger-ingredients-category.module.css';
+
+
 
 const IngredientCategory = forwardRef(({
     caption,
     captionID,
     items,
-    onItemClick,
-}, ref) => {
+}: IIngredientCategoryProps, ref: ForwardedRef<HTMLUListElement>) => {
 
-    const burgerConstructor = useSelector(store => store.burgerConstructor);
+    const burgerConstructor = useSelector((store: IState) => store.burgerConstructor);
 
     const itemsCounter = useMemo(() => {
         const { bun, items } = burgerConstructor;
-        const counters = {};
+
+        
+        const counters: ICounters = {};
 
         items.forEach((item) => {
             if (!counters[item._id]){
@@ -38,7 +42,7 @@ const IngredientCategory = forwardRef(({
                         (item) => {
                             return(
                                 <li className={styles.itemIngredient + ' mb-8'} key={item._id}>
-                                    <BurgerIngredientsItem key={item._id} item={item} openModal={onItemClick} counter={itemsCounter[item._id]}/>
+                                    <BurgerIngredientsItem key={item._id} item={item} counter={itemsCounter[item._id]}/>
                                 </li>
                             )}
                     )

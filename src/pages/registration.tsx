@@ -4,25 +4,27 @@ import styles from './form.module.css';
 import { useDispatch, useSelector } from "react-redux";
 import { setRegistrationFormValue, userRegistration } from '../services/actions/user';
 import { Link, useLocation, Redirect } from 'react-router-dom';
+import { ILocation, ILocationBackground, ILocationStateFrom, IState } from "../types";
 
-export function RegistrationPage() {
+const RegistrationPage = () => {
     const {
         name,
         email,
         password,
-    } = useSelector(state => state.user.formRegistration);
+    } = useSelector((store: IState) => store.user.formRegistration);
 
-    const { isAuth, registrationRequest } = useSelector(state => state.user);
+    const { isAuth, registrationRequest } = useSelector((store: IState) => store.user);
 
-    const { state } = useLocation();
+    const { state } = useLocation<ILocationStateFrom>();
 
     const dispatch = useDispatch();
 
-    const onFormChange = (e) => {
+    const onFormChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+        console.log(e);
         dispatch(setRegistrationFormValue(e.target.name, e.target.value))
     }
 
-    const onFormSubmit = (e) => {
+    const onFormSubmit = (e: React.FormEvent<HTMLFormElement>) => {
         e.preventDefault();
         dispatch(userRegistration());
     }
@@ -70,3 +72,5 @@ export function RegistrationPage() {
         </section>
     );
 }
+
+export default RegistrationPage;

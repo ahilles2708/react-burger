@@ -1,16 +1,18 @@
-import React, { useRef } from 'react';
+import React, { ReactElement, useRef } from 'react';
 import { ConstructorElement, DragIcon } from '@ya.praktikum/react-developer-burger-ui-components';
 import styles from './burger-constructor-element.module.css';
-import PropTypes from 'prop-types';
-import {itemPropTypes} from '../../utils/ingredientPropTypes';
 import { useDispatch } from 'react-redux';
 import { CONSTRUCTOR_DELETE_ITEM, CONSTRUCTOR_SORT } from '../../services/actions/burgerConstructor';
-import { useDrag, useDrop } from 'react-dnd';
+import { useDrag, useDrop, XYCoord } from 'react-dnd';
+import { IBurgerConstructorElementProps, IItemProps } from '../../types';
 
-export default function BurgerConstructorElement ({ item, index }) {
+type TItemDraggable = IItemProps & {
+    index: number;
+}
+
+const BurgerConstructorElement: React.FC<IBurgerConstructorElementProps> = ({ item, index }) => {
     const dispatch = useDispatch();
-    const ref = useRef(null)
-    /*https://webformyself.com/ispolzovanie-peretaskivaniya-v-react/*/
+    const ref = useRef<HTMLLIElement | null>(null);
     const [{opacity}, drag] = useDrag({
         type: "sort_items",
         item: () => {
@@ -23,25 +25,19 @@ export default function BurgerConstructorElement ({ item, index }) {
         })
     });
 
-    const [{handlerId}, drop] = useDrop({
+    const [, drop] = useDrop({
         accept: "sort_items",
-        collect(monitor) {
-            return {
-                handlerId: monitor.getHandlerId(),
-            };
-        },
-        hover(item, monitor){
+        hover(item: TItemDraggable, monitor){
             const dragIndex = item.index;
             const hoverIndex = index;
-            if ( dragIndex === hoverIndex){
+            if ( dragIndex === hoverIndex || !ref?.current || !monitor){
                 return;
             }
-            const hoverBoundingRect = ref.current?.getBoundingClientRect();
+            const hoverBoundingRect = ref.current.getBoundingClientRect();
             const hoverMiddleY = (hoverBoundingRect.bottom - hoverBoundingRect.top) / 2;
-            const hoverActualY = monitor.getClientOffset().y - hoverBoundingRect.top;
-            // if dragging down, continue only when hover is smaller than middle Y
+            const clientOffset = monitor.getClientOffset();
+            const hoverActualY = (clientOffset as XYCoord).y - hoverBoundingRect.top;
             if (dragIndex < hoverIndex && hoverActualY < hoverMiddleY) return;
-            // if dragging up, continue only when hover is bigger than middle Y
             if (dragIndex > hoverIndex && hoverActualY > hoverMiddleY) return;
 
             dispatch({
@@ -55,14 +51,13 @@ export default function BurgerConstructorElement ({ item, index }) {
         },
     });
     
-    const dragDropRef = drag(drop(ref))
+    drag(drop(ref));
 
     return(
         <li 
             className={styles.fillingItem + ' mb-4'}
-            ref={dragDropRef}
+            ref={ref}
             style={{opacity}}
-            data-handler-id={handlerId}
         >
             <DragIcon type="primary"/>
             <ConstructorElement 
@@ -81,7 +76,4 @@ export default function BurgerConstructorElement ({ item, index }) {
     )
 }
 
-BurgerConstructorElement.propTypes = {
-    item: itemPropTypes.isRequired,
-    index: PropTypes.number.isRequired,
-}
+export default BurgerConstructorElement;

@@ -5,14 +5,15 @@ import { useHistory } from 'react-router-dom';
 import { useSelector, useDispatch } from "react-redux";
 import { passwordForgot, setPasswordForgotFormValue } from '../services/actions/user';
 import { Link, useLocation, Redirect } from 'react-router-dom';
+import { ILocationStateFrom, IState } from "../types";
 
-export function ForgotPassword() {
+const ForgotPassword = () => {
 
     const {
         email,
-    } = useSelector(state => state.user.formPasswordForgot);
-    const { isAuth, passwordForgotRequest, passwordForgotSuccess } = useSelector(state => state.user);
-    const { state } = useLocation();
+    } = useSelector((store: IState) => store.user.formPasswordForgot);
+    const { isAuth, passwordForgotRequest, passwordForgotSuccess } = useSelector((store: IState) => store.user);
+    const { state } = useLocation<ILocationStateFrom>();
     const dispatch = useDispatch();
     const history = useHistory();
 
@@ -24,18 +25,18 @@ export function ForgotPassword() {
         }, [passwordForgotSuccess]
     )
 
-    const onFormChange = (e) => {
+    const onFormChange = (e: React.ChangeEvent<HTMLInputElement>) => {
         dispatch(setPasswordForgotFormValue(e.target.name, e.target.value))
     }
 
-    const onFormSubmit = (e) => {
+    const onFormSubmit = (e: React.FormEvent<HTMLFormElement>) => {
         e.preventDefault();
-        dispatch(passwordForgot(e.target.name, e.target.value))
+        dispatch(passwordForgot())
     }
 
     if (isAuth) {
         return (
-          <Redirect to={ state?.from || '/' }/>
+            <Redirect to={ state?.from || '/' }/>
         );
     }
     
@@ -64,3 +65,5 @@ export function ForgotPassword() {
         </section>
     );
 }
+
+export default ForgotPassword;
