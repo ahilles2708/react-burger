@@ -1,11 +1,11 @@
 import React from 'react';
 import styles from './modal-overlay.module.css';
-import PropTypes from 'prop-types';
+import { IModalOverlayProps } from '../../types';
 
-export default function ModalOverlay(props){
+const ModalOverlay: React.FC<IModalOverlayProps> = (props) => {
 
     const closeThisModal = () =>{
-        props.toggle(false);
+        props.toggle();
     }
 
     return (
@@ -13,6 +13,4 @@ export default function ModalOverlay(props){
     )
 }
 
-ModalOverlay.propTypes = {
-    toggle: PropTypes.func.isRequired
-}
+export default ModalOverlay;

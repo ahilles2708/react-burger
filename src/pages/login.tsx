@@ -6,33 +6,34 @@ import { useDispatch } from "react-redux";
 import { userLogIn, setLoginFormValue } from "../services/actions/user";
 import { useSelector } from "react-redux";
 import { checkAccessToken } from "../utils/utils";
+import { ILocationStateFrom, IState } from "../types";
 
-export function LoginPage() {
+const LoginPage = () => {
 
     const {
         email,
         password,
-    } = useSelector(state => state.user.formLogin);
+    } = useSelector((store: IState) => store.user.formLogin);
 
-    const { isAuth, loginRequest } = useSelector(state => state.user);
+    const { isAuth, loginRequest } = useSelector((store: IState) => store.user);
 
     const isAccessToken = checkAccessToken();
 
     const dispatch = useDispatch();
-    const { state } = useLocation();
+    const { state } = useLocation<ILocationStateFrom>();
 
-    const onFormChange = (e) => {
+    const onFormChange = (e: React.ChangeEvent<HTMLInputElement>) => {
         dispatch(setLoginFormValue(e.target.name, e.target.value))
     }
 
-    const onFormSubmit = (e) => {
+    const onFormSubmit = (e: React.FormEvent<HTMLFormElement>) => {
         e.preventDefault();
-        dispatch(userLogIn(e.target.name, e.target.value));
+        dispatch(userLogIn());
     }
 
     if (isAuth && isAccessToken) {
         return (
-          <Redirect to={ state ? state.from : '/' }/>
+            <Redirect to={ state?.from || '/' }/>
         );
     }
 
@@ -73,3 +74,5 @@ export function LoginPage() {
         </section>
     );
 }
+
+export default LoginPage;

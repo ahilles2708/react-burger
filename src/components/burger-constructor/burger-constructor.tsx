@@ -1,4 +1,4 @@
-import React, { useMemo, useCallback } from 'react';
+import React, { useMemo } from 'react';
 import { CurrencyIcon, Button, ConstructorElement } from '@ya.praktikum/react-developer-burger-ui-components';
 import BurgerConstructorElement from '../burger-constructor-element/burger-constructor-element';
 import styles from './burger-constructor.module.css';
@@ -9,30 +9,26 @@ import { useDrop } from 'react-dnd';
 import { addItemToConstructor, CONSTRUCTOR_RESET } from '../../services/actions/burgerConstructor';
 import { RESET_ORDER, createOrder } from '../../services/actions/order';
 import { checkAccessToken } from '../../utils/utils';
-import { Redirect, useLocation, useHistory } from 'react-router-dom';
+import { useLocation, useHistory } from 'react-router-dom';
+import { IItemProps, IState, TItemDraggable } from '../../types';
 
 export default function BurgerConstructor () {
     const dispatch = useDispatch();
 
-    const {bun, items} = useSelector(store => store.burgerConstructor);
+    const {bun, items} = useSelector((store: IState) => store.burgerConstructor);
 
-    const { orderRequest, orderFailing, orderNew, openOrderModal } = useSelector(store => store.order);
-    const { isAuth } = useSelector(store => store.user);
+    const { orderNew, openOrderModal } = useSelector((store: IState) => store.order);
+    const { isAuth } = useSelector((store: IState) => store.user);
     const location = useLocation();
     const history = useHistory();
     
-    const [open, setOpen] = React.useState(false);
-    const  toggleModal = () => {
-        setOpen(!open);
-    }
-
-    const totalCost = useMemo(() => {
+    const totalCost = useMemo<number>(() => {
         return (
             (bun ? bun.price *2 : 0) + (items ? items.reduce((sum, item) => sum + item.price, 0) : 0)
         );
     }, [bun, items]);
 
-    const onDropHandler = (item) => {
+    const onDropHandler = (item: IItemProps) => {
         dispatch(
             addItemToConstructor(item)
         )
@@ -40,7 +36,7 @@ export default function BurgerConstructor () {
 
     const [, dropTarget] = useDrop({
         accept: "ingredient",
-        drop(item) {
+        drop(item: TItemDraggable) {
             onDropHandler(item);
         },
     });

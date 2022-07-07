@@ -1,13 +1,13 @@
 import { useSelector } from 'react-redux';
 import { Route, Redirect, useLocation } from 'react-router-dom';
+import { IProtectedRouteProps, IState } from '../../types';
 import { checkAccessToken } from '../../utils/utils';
-import PropTypes from 'prop-types';
 
-export function ProtectedRoute({ path, exact, children }) {
+const ProtectedRoute: React.FC<IProtectedRouteProps> = ({ path, exact, children }) => {
 
     const {
         isAuth,
-    } = useSelector(state => state.user);
+    } = useSelector((store: IState) => store.user);
     const isAccessToken = checkAccessToken();
 
     return (
@@ -30,8 +30,4 @@ export function ProtectedRoute({ path, exact, children }) {
     );
 }
 
-ProtectedRoute.propTypes = {
-    path: PropTypes.string.isRequired,
-    exact: PropTypes.bool,
-    children: PropTypes.node.isRequired
-};
+export default ProtectedRoute;

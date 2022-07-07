@@ -2,18 +2,19 @@ import AppHeader from '../app-header/app-header';
 import { Switch, Route, useLocation, useHistory } from 'react-router-dom';
 import { MainPage, LoginPage, ForgotPassword, ResetPassword, Profile, RegistrationPage, NotFound404, IngredientDetailPage } from '../../pages';
 import { useDispatch } from 'react-redux';
-import { ProtectedRoute } from '../protected-route/protected-route';
+import ProtectedRoute from '../protected-route/protected-route';
 import Modal from '../modal/modal';
 import IngredientDetails from '../ingredient-details/ingredient-details';
 import { useEffect } from 'react';
 import { getIngredientsData } from '../../services/actions/burgerIngredients';
 import { userGetInfo } from '../../services/actions/user';
 import { checkAccessToken } from '../../utils/utils';
+import { ILocationBackground } from '../../types';
 
-export default function App() {
+const App = () => {
     const dispatch = useDispatch();
     const history = useHistory();
-    const location = useLocation();
+    const location = useLocation<ILocationBackground>();
 
     const background = location.state && location.state.background;
 
@@ -75,3 +76,5 @@ export default function App() {
         </>
     )
 }
+
+export default App;

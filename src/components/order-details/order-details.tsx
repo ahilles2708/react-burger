@@ -1,11 +1,11 @@
-import React from "react";
 import styles from './order-details.module.css';
 import CheckImg from '../../images/graphics.png';
 import { useSelector } from "react-redux";
+import { IState } from "../../types";
 
-export default function OrderDetails () {
+const OrderDetails = () => {
 
-    const { orderRequest, orderFailed, orderNew } = useSelector(store => store.order);
+    const { orderRequest, orderFailed, orderNew } = useSelector((store: IState) => store.order);
 
     return(
         <div className={styles.orderContainer + ' mb-15'}>
@@ -32,3 +32,5 @@ export default function OrderDetails () {
         </div>
     )
 }
+
+export default OrderDetails;

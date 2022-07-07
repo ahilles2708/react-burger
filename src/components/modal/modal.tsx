@@ -3,9 +3,15 @@ import ReactDOM from 'react-dom';
 import ModalOverlay from '../modal-overlay/modal-overlay';
 import styles from './modal.module.css';
 import { CloseIcon } from '@ya.praktikum/react-developer-burger-ui-components';
-import PropTypes from 'prop-types';
 
-export default function Modal (props) {
+interface IModalProps  {
+    toggle: () => void;
+    caption: string;
+}
+
+const modalRoot = document.getElementById("modal") as HTMLElement;
+
+const Modal: React.FC<IModalProps> = ( props ) => {
 
     const closeThisModal = () =>{
         props.toggle();
@@ -34,12 +40,8 @@ export default function Modal (props) {
                 {props.children}
             </div>
         </>,
-        document.getElementById("modal")
+        modalRoot
     )
 }
 
-Modal.propTypes = {
-    toggle: PropTypes.func.isRequired,
-    caption: PropTypes.string.isRequired,
-    children: PropTypes.element.isRequired
-}
+export default Modal;

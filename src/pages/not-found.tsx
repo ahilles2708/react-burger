@@ -1,7 +1,7 @@
 import styles from './form.module.css';
 import { Link } from 'react-router-dom';
 
-export function NotFound404() {
+const NotFound404 = () => {
     return(
         <section className={styles.formContainer}>
             <p className="text text_type_main-large">
@@ -11,3 +11,5 @@ export function NotFound404() {
         </section>
     );
 }
+
+export default NotFound404;
