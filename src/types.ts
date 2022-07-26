@@ -36,23 +36,10 @@ export interface DragItem {
     derp: string;
   }
 
-export interface IState {
-    order: any;
-    ingredients: IIngredientsState;
-    modal: {data: any};
-    burgerConstructor: IConstructorState;
-    user: any;
-}
-
 export interface IParams {
     id: string;
 }
 
-export interface IIngredientsState {
-    data: IItemProps[];
-    dataFailed: any;
-    dataRequest: any;
-}
 export interface IConstructorState {
     bun: IItemProps;
     items: IItemProps[];

@@ -1,22 +1,16 @@
 import React from "react";
 import { Input, Button, PasswordInput } from "@ya.praktikum/react-developer-burger-ui-components";
 import styles from './form.module.css';
-import { useHistory } from 'react-router-dom';
-import { useSelector, useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "../services/types/hooks";
 import { passwordReset, setPasswordResetFormValue } from '../services/actions/user';
 import { Link, useLocation, Redirect } from 'react-router-dom';
-import { ILocationStateFrom, IState } from "../types";
+import { ILocationStateFrom } from "../types";
 
 const ResetPassword = () => {
-    const {
-        password,
-        token,
-    } = useSelector((store: IState) => store.user.formPasswordReset);
-
-    const { isAuth, passwordResetRequest, passwordResetSuccess, passwordForgotSuccess } = useSelector((store: IState) => store.user);
+    const { user } = useSelector(store => store);
+    const { isAuth, passwordResetRequest, passwordResetSuccess, passwordForgotSuccess, formPasswordReset } = user;
     const { state } = useLocation<ILocationStateFrom>();
     const dispatch = useDispatch();
-    const history = useHistory();
 
     const onFormChange = (e: React.ChangeEvent<HTMLInputElement>) => {
         dispatch(setPasswordResetFormValue(e.target.name, e.target.value))
@@ -24,7 +18,7 @@ const ResetPassword = () => {
 
     const onFormSubmit = (e: React.FormEvent<HTMLFormElement>) => {
         e.preventDefault();
-        dispatch(passwordReset())
+        dispatch(passwordReset(user))
     }
 
     if (isAuth) {
@@ -49,13 +43,13 @@ const ResetPassword = () => {
         <section className={styles.formContainer}>
             <form className={styles.loginForm} onSubmit={onFormSubmit}>
                 <h1 className={styles.caption}>Восстановление пароля</h1>
-                <PasswordInput onChange={onFormChange} value={password} name={'password'} />
+                <PasswordInput onChange={onFormChange} value={formPasswordReset.password} name={'password'} />
                 <Input
                     type={'text'}
                     placeholder={'Введите код из письма'}
                     onChange={onFormChange}
                     icon={'CurrencyIcon'}
-                    value={token}
+                    value={formPasswordReset.token}
                     name={'token'}
                     error={false}
                     errorText={'Ошибка'}

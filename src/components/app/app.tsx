@@ -26,7 +26,7 @@ const App = () => {
         if (isAccessToken){
             dispatch(userGetInfo());
         }
-      }, [dispatch]);
+      }, [dispatch, isAccessToken]);
 
     const closeModal = () => history.goBack();
 
@@ -84,7 +84,7 @@ const App = () => {
                             caption=""
                             toggle={closeModal}
                         >
-                            <FeedOrder isModal={true}/>
+                            <FeedOrder/>
                         </Modal>
                     </Route>
                 </Switch>

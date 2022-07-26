@@ -27,7 +27,8 @@ import {
     PASSWORD_RESET_FORM_SET_VALUE,
     USER_LOGOUT
 } from "../constants/user";
-import { AppDispatch } from '../types';
+import { AppDispatch, AppThunk } from '../types';
+import { TUserState } from '../reducers/user';
 
 const registrationURL = `${baseUrl}/auth/register`;
 const logoutURL = `${baseUrl}/auth/logout`;
@@ -131,7 +132,7 @@ export interface IUserLogout {
 }
 
 
-export const passwordForgot = () => (dispatch: AppDispatch, getState: any) => {
+export const passwordForgot: AppThunk = (user: TUserState) => (dispatch: AppDispatch) => {
     dispatch({
         type: FORGOT_PASSWORD_REQUEST
     });
@@ -141,7 +142,7 @@ export const passwordForgot = () => (dispatch: AppDispatch, getState: any) => {
         headers: {
             "Content-Type": "application/json;charset=utf-8",
         },
-        body: JSON.stringify(getState().user.formPasswordForgot),
+        body: JSON.stringify(user.formPasswordForgot),
     })
     .then(checkResponse)
     .then(result => {
@@ -170,7 +171,7 @@ export const setPasswordForgotFormValue = (field: string, value: string) => ({
     value
 });
 
-export const passwordReset = () => (dispatch: AppDispatch, getState: any) => {
+export const passwordReset: AppThunk = (user: TUserState) => (dispatch: AppDispatch) => {
     dispatch({
         type: RESET_PASSWORD_REQUEST
     });
@@ -180,7 +181,7 @@ export const passwordReset = () => (dispatch: AppDispatch, getState: any) => {
         headers: {
             "Content-Type": "application/json;charset=utf-8",
         },
-        body: JSON.stringify(getState().user.formPasswordReset),
+        body: JSON.stringify(user.formPasswordReset),
     })
     .then(checkResponse)
     .then(result => {
@@ -209,7 +210,7 @@ export const setPasswordResetFormValue = (field: string, value: string) => ({
     value
 });
 
-export const userLogIn = () => (dispatch: AppDispatch, getState: any) => {
+export const userLogIn: AppThunk = (user: TUserState) => (dispatch: AppDispatch) => {
     dispatch({
         type: LOGIN_REQUEST
     });
@@ -219,7 +220,7 @@ export const userLogIn = () => (dispatch: AppDispatch, getState: any) => {
         headers: {
             "Content-Type": "application/json;charset=utf-8",
         },
-        body: JSON.stringify(getState().user.formLogin),
+        body: JSON.stringify(user.formLogin),
     })
     .then(checkResponse)
     .then(result => {
@@ -246,7 +247,7 @@ export const userLogIn = () => (dispatch: AppDispatch, getState: any) => {
     )
 }
 
-export const userGetInfo = () => (dispatch: AppDispatch) => {
+export const userGetInfo: AppThunk = () => (dispatch: AppDispatch) => {
     dispatch({
         type: USER_INFO_REQUEST
     });
@@ -278,7 +279,7 @@ export const userGetInfo = () => (dispatch: AppDispatch) => {
     )
 }
 
-export const userInfoPatch = () => (dispatch: AppDispatch, getState: any) => {
+export const userInfoPatch: AppThunk = (user: TUserState) => (dispatch: AppDispatch) => {
     dispatch({
         type: USER_INFO_PATCH_REQUEST,
     });
@@ -291,7 +292,7 @@ export const userInfoPatch = () => (dispatch: AppDispatch, getState: any) => {
                 "Content-Type": "application/json;charset=utf-8",
                 'Authorization': "Bearer " + getCookie("accessToken"),
             },
-            body: JSON.stringify(getState().user.formProfile),
+            body: JSON.stringify(user.formProfile),
         }
     ).then(result => {
         if(result && result.success) {
@@ -358,7 +359,7 @@ export const setLoginFormValue = (field: string, value: string) => ({
     value
 });
 
-export const userRegistration = () => (dispatch: AppDispatch, getState: any) => {
+export const userRegistration = (user: TUserState) => (dispatch: AppDispatch) => {
     dispatch({
         type: REGISTRATION_REQUEST
     });
@@ -368,7 +369,7 @@ export const userRegistration = () => (dispatch: AppDispatch, getState: any) => 
         headers: {
             "Content-Type": "application/json;charset=utf-8",
         },
-        body: JSON.stringify(getState().user.formRegistration),
+        body: JSON.stringify(user.formRegistration),
     })
     .then(checkResponse)
     .then(result => {

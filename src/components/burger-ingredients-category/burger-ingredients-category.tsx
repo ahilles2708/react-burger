@@ -1,6 +1,6 @@
 import { useMemo, forwardRef, ForwardedRef } from "react";
 import { useSelector } from '../../services/types/hooks';
-import { ICounters, IIngredientCategoryProps, IState } from "../../types";
+import { ICounters, IIngredientCategoryProps } from "../../types";
 import BurgerIngredientsItem from '../burger-ingredients-item/burger-ingredients-item';
 import styles from './burger-ingredients-category.module.css';
 

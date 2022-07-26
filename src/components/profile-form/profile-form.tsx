@@ -6,20 +6,20 @@ import styles from './profile-form.module.css';
 
 const ProfileForm = () => {
     const dispatch = useDispatch();
-
-    const nameInitial = useSelector(store => store.user.info.name);
-    const emailInitial = useSelector(store => store.user.info.email);
+    const { user } = useSelector(store => store);
+    const nameInitial = user.info.name;
+    const emailInitial = user.info.email;
 
     useEffect(() => {
         dispatch(setProfileFormValue("name", nameInitial));
         dispatch(setProfileFormValue("email", emailInitial));
-        }, [nameInitial, emailInitial]
+        }, [nameInitial, emailInitial, dispatch]
     ); 
 
-    const nameForPatch = useSelector(store => store.user.formProfile.name);
-    const emailForPatch = useSelector(store => store.user.formProfile.email);
-    const passwordForPatch = useSelector(store => store.user.formProfile.password);
-    const { userInfoPatchRequest } = useSelector(store => store.user);
+    const nameForPatch = user.formProfile.name;
+    const emailForPatch = user.formProfile.email;
+    const passwordForPatch = user.formProfile.password;
+    const { userInfoPatchRequest } = user;
 
     const onFormChange = (e: React.ChangeEvent<HTMLInputElement>) => {
         dispatch(setProfileFormValue(e.target.name, e.target.value))
@@ -27,7 +27,7 @@ const ProfileForm = () => {
 
     const onFormSubmit = (e: React.FormEvent<HTMLFormElement>) => {
         e.preventDefault();
-        dispatch(userInfoPatch());
+        dispatch(userInfoPatch(user));
     }
 
     return(

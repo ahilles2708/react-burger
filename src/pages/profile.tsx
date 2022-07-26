@@ -67,7 +67,7 @@ const Profile = () => {
                             caption=""
                             toggle={closeModal}
                         >
-                            <ProfileOrder isModal={true}/>
+                            <ProfileOrder/>
                         </Modal>
                     </Route>
                 </Switch>

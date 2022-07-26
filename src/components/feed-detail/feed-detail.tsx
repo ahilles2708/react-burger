@@ -1,7 +1,5 @@
-import { useEffect } from "react";
 import { useParams } from 'react-router-dom';
-import { useDispatch, useSelector } from '../../services/types/hooks';
-import { wsFeedConnectionStart, wsFeedConnectionClosed } from '../../services/actions/wsFeed';
+import { useSelector } from '../../services/types/hooks';
 import { getBurgerStructure, dateFormatConverter } from "../../utils/utils";
 import { IItemProps, TOrder } from "../../types";
 import { CurrencyIcon } from "@ya.praktikum/react-developer-burger-ui-components";
@@ -31,26 +29,13 @@ const statusValue = (status: 'done' | 'created' | 'pending') => {
     );
 }
 
-const FeedOrder = ({ isModal = false }: { isModal?: boolean } ) => {
-
-    const dispatch = useDispatch();
+const FeedOrder = () => {
 
     const { id } = useParams<{ id: string }>();
 
-    const { wsConnected, orders } = useSelector(store => store.feed);
+    const { orders } = useSelector(store => store.feed);
   
     const { data } = useSelector(store => store.ingredients);
-
-    useEffect(() => {
-        if (!wsConnected) {
-            dispatch(wsFeedConnectionStart());
-        }
-        return () => {
-            if (wsConnected) {
-                dispatch(wsFeedConnectionClosed());
-            }
-        }
-    }, [dispatch, wsConnected])
 
     const viewedOrder = orders.find((order: TOrder) => order._id === id);
 

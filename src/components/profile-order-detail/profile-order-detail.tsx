@@ -1,8 +1,6 @@
 
-import { useEffect } from "react";
 import { useParams } from 'react-router-dom';
-import { useDispatch, useSelector } from '../../services/types/hooks';
-import { wsProfileOrdersConnectionStart, wsProfileOrdersConnectionClosed } from "../../services/actions/wsOrders";
+import { useSelector } from '../../services/types/hooks';
 import { getBurgerStructure, dateFormatConverter } from "../../utils/utils";
 import { IItemProps, TOrder } from "../../types";
 import { CurrencyIcon } from "@ya.praktikum/react-developer-burger-ui-components";
@@ -32,26 +30,13 @@ const statusValue = (status: 'done' | 'created' | 'pending') => {
     );
 }
 
-const ProfileOrder = ({ isModal = false }: { isModal?: boolean } ) => {
-
-    const dispatch = useDispatch();
+const ProfileOrder = () => {
 
     const { id } = useParams<{ id: string }>();
 
-    const { wsProfileConnected, orders } = useSelector(store => store.profileOrders);
+    const { orders } = useSelector(store => store.profileOrders);
   
     const { data } = useSelector(store => store.ingredients);
-
-    useEffect(() => {
-        if (!wsProfileConnected) {
-            dispatch(wsProfileOrdersConnectionStart());
-        }
-        return () => {
-            if (wsProfileConnected) {
-                dispatch(wsProfileOrdersConnectionClosed());
-            }
-        }
-    }, [dispatch, wsProfileConnected])
 
     const viewedOrder = orders.find((order: TOrder) => order._id === id);
 
