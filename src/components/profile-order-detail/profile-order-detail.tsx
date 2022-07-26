@@ -4,7 +4,7 @@ import { useSelector } from '../../services/types/hooks';
 import { getBurgerStructure, dateFormatConverter } from "../../utils/utils";
 import { IItemProps, TOrder } from "../../types";
 import { CurrencyIcon } from "@ya.praktikum/react-developer-burger-ui-components";
-import BurgerStructure from "../burger-structure/burger-structure";
+import BurgerStructure from '../burger-structure/burger-structure';
 import styles from "./profile-order.module.css";
 
 const statusValue = (status: 'done' | 'created' | 'pending') => {
