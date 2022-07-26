@@ -1,37 +1,33 @@
 import { checkResponse, setCookie, deleteCookie, fetchWithRefresh, getCookie } from '../../utils/utils';
 import { baseUrl } from '../../utils/constants';
 
-export const REGISTRATION_REQUEST = 'REGISTRATION_REQUEST';
-export const REGISTRATION_FAILED = 'REGISTRATION_FAILED';
-export const REGISTRATION_SUCCESS = 'REGISTRATION_SUCCESS';
-
-export const LOGIN_REQUEST = 'LOGIN_REQUEST';
-export const LOGIN_FAILED = 'LOGIN_FAILED';
-export const LOGIN_SUCCESS = 'LOGIN_SUCCESS';
-
-export const LOGIN_FORM_SET_VALUE = 'LOGIN_FORM_SET_VALUE';
-export const PROFILE_FORM_SET_VALUE = 'PROFILE_FORM_SET_VALUE';
-export const REGISTRATION_FORM_SET_VALUE = "REGISTRATION_FORM_SET_VALUE";
-export const PASSWORD_FORGOT_FORM_SET_VALUE = "PASSWORD_FORGOT_FORM_SET_VALUE";
-export const PASSWORD_RESET_FORM_SET_VALUE = "PASSWORD_RESET_FORM_SET_VALUE";
-
-export const USER_INFO_REQUEST = "USER_INFO_REQUEST";
-export const USER_INFO_SUCCESS = "USER_INFO_SUCCESS";
-export const USER_INFO_FAILED = "USER_INFO_FAILED";
-
-export const USER_INFO_PATCH_REQUEST = "USER_INFO_PATCH_REQUEST";
-export const USER_INFO_PATCH_SUCCESS = "USER_INFO_PATCH_SUCCESS";
-export const USER_INFO_PATCH_FAILED = "USER_INFO_PATCH_FAILED";
-
-export const FORGOT_PASSWORD_REQUEST = "FORGOT_PASSWORD_REQUEST";
-export const FORGOT_PASSWORD_SUCCESS = "FORGOT_PASSWORD_SUCCESS";
-export const FORGOT_PASSWORD_FAILED = "FORGOT_PASSWORD_FAILED";
-
-export const RESET_PASSWORD_REQUEST = "RESET_PASSWORD_REQUEST";
-export const RESET_PASSWORD_SUCCESS = "RESET_PASSWORD_SUCCESS";
-export const RESET_PASSWORD_FAILED = "RESET_PASSWORD_FAILED";
-
-export const USER_LOGOUT = "USER_LOGOUT";
+import {
+    REGISTRATION_REQUEST,
+    REGISTRATION_FAILED,
+    REGISTRATION_SUCCESS,
+    REGISTRATION_FORM_SET_VALUE,
+    LOGIN_REQUEST,
+    LOGIN_FAILED,
+    LOGIN_SUCCESS,
+    LOGIN_FORM_SET_VALUE,
+    USER_INFO_REQUEST,
+    USER_INFO_SUCCESS,
+    USER_INFO_FAILED,
+    USER_INFO_PATCH_REQUEST,
+    USER_INFO_PATCH_SUCCESS,
+    USER_INFO_PATCH_FAILED,
+    PROFILE_FORM_SET_VALUE,
+    FORGOT_PASSWORD_REQUEST,
+    FORGOT_PASSWORD_SUCCESS,
+    FORGOT_PASSWORD_FAILED,
+    PASSWORD_FORGOT_FORM_SET_VALUE,
+    RESET_PASSWORD_REQUEST,
+    RESET_PASSWORD_SUCCESS,
+    RESET_PASSWORD_FAILED,
+    PASSWORD_RESET_FORM_SET_VALUE,
+    USER_LOGOUT
+} from "../constants/user";
+import { AppDispatch } from '../types';
 
 const registrationURL = `${baseUrl}/auth/register`;
 const logoutURL = `${baseUrl}/auth/logout`;
@@ -40,7 +36,102 @@ const getUserInfoURL = `${baseUrl}/auth/user`;
 const passwordForgotURL = `${baseUrl}/password-reset`;
 const passwordResetURL = `${baseUrl}/password-reset/reset`;
 
-export const passwordForgot = () => (dispatch, getState) => {
+export interface IRegistrationRequest {
+    readonly type: typeof REGISTRATION_REQUEST;
+}
+export interface IRegistrationFailed {
+    readonly type: typeof REGISTRATION_FAILED;
+}
+export interface IRegistrationSuccess {
+    readonly type: typeof REGISTRATION_SUCCESS;
+}
+export interface IRegistrationFormSetValue {
+    readonly type: typeof REGISTRATION_FORM_SET_VALUE;
+    readonly field: string;
+    readonly value: string;
+}
+
+export interface ILoginRequest {
+    readonly type: typeof LOGIN_REQUEST;
+}
+export interface ILoginFailed {
+    readonly type: typeof LOGIN_FAILED;
+}
+export interface ILoginSuccess {
+    readonly type: typeof LOGIN_SUCCESS;
+    readonly user: {
+        name: string;
+        email: string;
+    }
+}
+export interface ILoginFormSetValue {
+    readonly type: typeof LOGIN_FORM_SET_VALUE;
+    readonly field: string;
+    readonly value: string;
+}
+
+export interface IUserInfoRequest {
+    readonly type: typeof USER_INFO_REQUEST;
+}
+export interface IUserInfoFailed {
+    readonly type: typeof USER_INFO_FAILED;
+}
+export interface IUserInfoSuccess {
+    readonly type: typeof USER_INFO_SUCCESS;
+    readonly name: string;
+}
+
+export interface IUserInfoPatchRequest {
+    readonly type: typeof USER_INFO_PATCH_REQUEST;
+}
+export interface IUserInfoPatchFailed {
+    readonly type: typeof USER_INFO_PATCH_FAILED;
+}
+export interface IUserInfoPatchSuccess {
+    readonly type: typeof USER_INFO_PATCH_SUCCESS;
+}
+export interface IUserInfoPatchFormSetValue {
+    readonly type: typeof PROFILE_FORM_SET_VALUE;
+    readonly field: string;
+    readonly value: string;
+}
+
+export interface IForgotPasswordRequest {
+    readonly type: typeof FORGOT_PASSWORD_REQUEST;
+}
+export interface IForgotPasswordFailed {
+    readonly type: typeof FORGOT_PASSWORD_FAILED;
+}
+export interface IForgotPasswordSuccess {
+    readonly type: typeof FORGOT_PASSWORD_SUCCESS;
+}
+export interface IForgotPasswordFormSetValue {
+    readonly type: typeof PASSWORD_FORGOT_FORM_SET_VALUE;
+    readonly field: string;
+    readonly value: string;
+}
+
+export interface IResetPasswordRequest {
+    readonly type: typeof RESET_PASSWORD_REQUEST;
+}
+export interface IResetPasswordFailed {
+    readonly type: typeof RESET_PASSWORD_FAILED;
+}
+export interface IResetPasswordSuccess {
+    readonly type: typeof RESET_PASSWORD_SUCCESS;
+}
+export interface IResetPasswordFormSetValue {
+    readonly type: typeof PASSWORD_RESET_FORM_SET_VALUE;
+    readonly field: string;
+    readonly value: string;
+}
+
+export interface IUserLogout {
+    readonly type: typeof USER_LOGOUT;
+}
+
+
+export const passwordForgot = () => (dispatch: AppDispatch, getState: any) => {
     dispatch({
         type: FORGOT_PASSWORD_REQUEST
     });
@@ -73,13 +164,13 @@ export const passwordForgot = () => (dispatch, getState) => {
     )
 }
 
-export const setPasswordForgotFormValue = (field, value) => ({
+export const setPasswordForgotFormValue = (field: string, value: string) => ({
     type: PASSWORD_FORGOT_FORM_SET_VALUE,
     field,
     value
 });
 
-export const passwordReset = () => (dispatch, getState) => {
+export const passwordReset = () => (dispatch: AppDispatch, getState: any) => {
     dispatch({
         type: RESET_PASSWORD_REQUEST
     });
@@ -112,13 +203,13 @@ export const passwordReset = () => (dispatch, getState) => {
     )
 }
 
-export const setPasswordResetFormValue = (field, value) => ({
+export const setPasswordResetFormValue = (field: string, value: string) => ({
     type: PASSWORD_RESET_FORM_SET_VALUE,
     field,
     value
 });
 
-export const userLogIn = () => (dispatch, getState) => {
+export const userLogIn = () => (dispatch: AppDispatch, getState: any) => {
     dispatch({
         type: LOGIN_REQUEST
     });
@@ -155,7 +246,7 @@ export const userLogIn = () => (dispatch, getState) => {
     )
 }
 
-export const userGetInfo = () => (dispatch) => {
+export const userGetInfo = () => (dispatch: AppDispatch) => {
     dispatch({
         type: USER_INFO_REQUEST
     });
@@ -187,7 +278,7 @@ export const userGetInfo = () => (dispatch) => {
     )
 }
 
-export const userInfoPatch = () => (dispatch, getState) => {
+export const userInfoPatch = () => (dispatch: AppDispatch, getState: any) => {
     dispatch({
         type: USER_INFO_PATCH_REQUEST,
     });
@@ -222,7 +313,7 @@ export const userInfoPatch = () => (dispatch, getState) => {
     )
 }
 
-export const userLogOut = (dispatch) => {
+export const userLogOut = (dispatch: AppDispatch) => {
     fetch(logoutURL, {
         method: 'POST',
         mode: 'cors',
@@ -249,25 +340,25 @@ export const userLogOut = (dispatch) => {
     )
 }
 
-export const setRegistrationFormValue = (field, value) => ({
+export const setRegistrationFormValue = (field: string, value: string) => ({
     type: REGISTRATION_FORM_SET_VALUE,
     field,
     value
 });
 
-export const setProfileFormValue = (field, value) => ({
+export const setProfileFormValue = (field: string, value: string) => ({
     type: PROFILE_FORM_SET_VALUE,
     field,
     value
 });
 
-export const setLoginFormValue = (field, value) => ({
+export const setLoginFormValue = (field: string, value: string) => ({
     type: LOGIN_FORM_SET_VALUE,
     field,
     value
 });
 
-export const userRegistration = () => (dispatch, getState) => {
+export const userRegistration = () => (dispatch: AppDispatch, getState: any) => {
     dispatch({
         type: REGISTRATION_REQUEST
     });
@@ -303,3 +394,29 @@ export const userRegistration = () => (dispatch, getState) => {
         }
     )
 }
+
+export type TUserActions = 
+    | IRegistrationRequest
+    | IRegistrationFailed
+    | IRegistrationSuccess
+    | IRegistrationFormSetValue
+    | ILoginRequest
+    | ILoginFailed
+    | ILoginSuccess
+    | ILoginFormSetValue
+    | IUserInfoRequest
+    | IUserInfoFailed
+    | IUserInfoSuccess
+    | IUserInfoPatchRequest
+    | IUserInfoPatchFailed
+    | IUserInfoPatchSuccess
+    | IUserInfoPatchFormSetValue
+    | IForgotPasswordRequest
+    | IForgotPasswordFailed
+    | IForgotPasswordSuccess
+    | IForgotPasswordFormSetValue
+    | IResetPasswordRequest
+    | IResetPasswordFailed
+    | IResetPasswordSuccess
+    | IResetPasswordFormSetValue
+    | IUserLogout;

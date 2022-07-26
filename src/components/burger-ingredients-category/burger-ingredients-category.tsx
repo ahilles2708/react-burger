@@ -1,10 +1,8 @@
-import React, { useMemo, forwardRef, ForwardedRef } from "react";
-import { useSelector } from "react-redux";
+import { useMemo, forwardRef, ForwardedRef } from "react";
+import { useSelector } from '../../services/types/hooks';
 import { ICounters, IIngredientCategoryProps, IState } from "../../types";
 import BurgerIngredientsItem from '../burger-ingredients-item/burger-ingredients-item';
 import styles from './burger-ingredients-category.module.css';
-
-
 
 const IngredientCategory = forwardRef(({
     caption,
@@ -12,7 +10,7 @@ const IngredientCategory = forwardRef(({
     items,
 }: IIngredientCategoryProps, ref: ForwardedRef<HTMLUListElement>) => {
 
-    const burgerConstructor = useSelector((store: IState) => store.burgerConstructor);
+    const burgerConstructor = useSelector(store => store.burgerConstructor);
 
     const itemsCounter = useMemo(() => {
         const { bun, items } = burgerConstructor;

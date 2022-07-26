@@ -1,0 +1,12 @@
+.userInfo {
+    width: 480px;
+    display: flex;
+    flex-direction: column;
+    gap: 24px;
+}
+.userInfo > div {
+    width: 100% !important;
+}
+.userInfo > div > div {
+    width: 100% !important;
+}

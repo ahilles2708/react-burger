@@ -1,18 +1,18 @@
 import React, { useEffect, useMemo } from 'react';
 import { Tab } from '@ya.praktikum/react-developer-burger-ui-components';
 import styles from './burger-ingredients.module.css';
-import { useSelector, useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from '../../services/types/hooks';
 import { useInView } from 'react-intersection-observer';
 import IngredientCategory from '../burger-ingredients-category/burger-ingredients-category';
 import Modal from '../modal/modal';
 import IngredientDetails from '../ingredient-details/ingredient-details';
-import { CLOSE_INGREDIENT_MODAL } from '../../services/actions/modal';
-import { IItemProps, IState } from '../../types';
+import { CLOSE_INGREDIENT_MODAL } from '../../services/constants/modal';
+import { IItemProps } from '../../types';
 import { ETabs } from '../../enums';
 
 export default function BurgerIngredients() {
-    const { data, dataRequest, dataFailed } = useSelector((store: IState) => store.ingredients);
-    const needModalOpen = useSelector((store: IState) => store.modal.data);
+    const { data, dataRequest, dataFailed } = useSelector(store => store.ingredients);
+    const needModalOpen = useSelector(store => store.modal.data);
     const dispatch = useDispatch();
 
     const [bunsRef, inViewBuns] = useInView({
