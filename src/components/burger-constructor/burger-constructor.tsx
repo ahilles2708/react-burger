@@ -1,24 +1,26 @@
-import React, { useMemo } from 'react';
+import { useMemo } from 'react';
 import { CurrencyIcon, Button, ConstructorElement } from '@ya.praktikum/react-developer-burger-ui-components';
 import BurgerConstructorElement from '../burger-constructor-element/burger-constructor-element';
 import styles from './burger-constructor.module.css';
 import Modal from '../modal/modal';
 import OrderDetails from '../order-details/order-details';
-import { useSelector, useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from '../../services/types/hooks';
 import { useDrop } from 'react-dnd';
-import { addItemToConstructor, CONSTRUCTOR_RESET } from '../../services/actions/burgerConstructor';
-import { RESET_ORDER, createOrder } from '../../services/actions/order';
+import { addItemToConstructor } from '../../services/actions/burgerConstructor';
+import { CONSTRUCTOR_RESET } from '../../services/constants/burgerConstructor';
+import { RESET_ORDER} from '../../services/constants/order';
+import { createOrder } from '../../services/actions/order';
 import { checkAccessToken } from '../../utils/utils';
 import { useLocation, useHistory } from 'react-router-dom';
-import { IItemProps, IState, TItemDraggable } from '../../types';
+import { IItemProps, TItemDraggable } from '../../types';
 
 export default function BurgerConstructor () {
     const dispatch = useDispatch();
 
-    const {bun, items} = useSelector((store: IState) => store.burgerConstructor);
+    const {bun, items} = useSelector(store => store.burgerConstructor);
 
-    const { orderNew, openOrderModal } = useSelector((store: IState) => store.order);
-    const { isAuth } = useSelector((store: IState) => store.user);
+    const { orderNew, openOrderModal } = useSelector(store => store.order);
+    const { isAuth } = useSelector(store => store.user);
     const location = useLocation();
     const history = useHistory();
     
@@ -76,8 +78,8 @@ export default function BurgerConstructor () {
     }
 
     return (
-        <section className={' mt-25'}>
-            <div className={styles.fillingList + ' mb-10'} ref={dropTarget}>
+        <section className={' mt-20'}>
+            <div className={styles.fillingList + ' mb-8'} ref={dropTarget}>
                 {bun ? (
                     <div className={styles.fillingItem + ' mb-4 pl-8'}>
                         <ConstructorElement 

@@ -1,11 +1,23 @@
-import { CONSTRUCTOR_ADD_ITEM, CONSTRUCTOR_DELETE_ITEM, CONSTRUCTOR_SORT, CONSTRUCTOR_RESET } from "../actions/burgerConstructor";
+import { IItemProps } from "../../types";
+import { TConstructorActions } from "../actions/burgerConstructor";
+import { 
+    CONSTRUCTOR_ADD_ITEM,
+    CONSTRUCTOR_DELETE_ITEM,
+    CONSTRUCTOR_SORT,
+    CONSTRUCTOR_RESET
+} from "../constants/burgerConstructor";
 
-const initialState = {
+export type TConstructorState = {
+    bun: IItemProps | null;
+    items: IItemProps[];
+}
+
+const initialState: TConstructorState = {
     bun: null,
     items: []
 }
 
-export const burgerConstructorReducer = (state = initialState, action) => {
+export const burgerConstructorReducer = (state = initialState, action: TConstructorActions) => {
     switch(action.type){
         case CONSTRUCTOR_ADD_ITEM: {
             if (action.item.type === 'bun') {

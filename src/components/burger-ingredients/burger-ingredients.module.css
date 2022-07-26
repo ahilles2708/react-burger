@@ -1,9 +1,9 @@
 .ingredientsListBlock {
-    max-height: 600px;
+    max-height: 450px;
     overflow-y: scroll;
     scrollbar-width: thin;
     scrollbar-color: #8585AD #2F2F37;
 }
 .ingredientsListBlock::-webkit-scrollbar-thumb {
-    height: 492px;
+    height: 350px;
 }

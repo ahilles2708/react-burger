@@ -2,15 +2,33 @@ import { checkResponse } from '../../utils/utils';
 import { baseUrl } from '../../utils/constants';
 import { getCookie } from '../../utils/utils';
 
-export const CREATE_NEW_ORDER_REQUEST = 'CREATE_NEW_ORDER_REQUEST';
-export const CREATE_NEW_ORDER_FAILED = 'CREATE_NEW_ORDER_FAILED';
-export const CREATE_NEW_ORDER_SUCCESS = 'CREATE_NEW_ORDER_SUCCESS';
-export const RESET_ORDER = 'RESET_ORDER';
+import {
+    CREATE_NEW_ORDER_REQUEST,
+    CREATE_NEW_ORDER_FAILED,
+    CREATE_NEW_ORDER_SUCCESS,
+    RESET_ORDER,
+} from "../constants/order";
+import { AppDispatch } from '../types';
+import { IOrderNewData, TCreateOrder } from '../../types';
+
+export interface ICreateNewOrderRequest {
+    readonly type: typeof CREATE_NEW_ORDER_REQUEST;
+}
+export interface ICreateNewOrderFailed {
+    readonly type: typeof CREATE_NEW_ORDER_FAILED;
+}
+export interface ICreateNewOrderSuccess {
+    readonly type: typeof CREATE_NEW_ORDER_SUCCESS;
+    readonly data: IOrderNewData;
+}
+export interface IOrderReset {
+    readonly type: typeof RESET_ORDER;
+}
 
 const requestURL = `${baseUrl}/orders`;
 
-export function createOrder(data) {
-    return function(dispatch){
+export function createOrder(data: TCreateOrder) {
+    return function(dispatch: AppDispatch){
         dispatch({
             type: CREATE_NEW_ORDER_REQUEST
         })
@@ -44,3 +62,9 @@ export function createOrder(data) {
         )
     }
 }
+
+export type TCreateOrderActions =
+    | ICreateNewOrderRequest
+    | ICreateNewOrderFailed
+    | ICreateNewOrderSuccess
+    | IOrderReset;

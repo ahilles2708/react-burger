@@ -6,5 +6,22 @@ import Profile from "./profile";
 import RegistrationPage from "./registration";
 import NotFound404 from "./not-found";
 import IngredientDetailPage from "./ingredient-detail";
+import FeedPage from "./feed";
+import FeedOrderPage from "./feed-detail";
+import ProfileOrders from "./orders";
+import ProfileOrderPage from "./orders-detail";
 
-export { MainPage, LoginPage, ForgotPassword, ResetPassword, Profile, RegistrationPage, NotFound404, IngredientDetailPage };
+export { 
+    MainPage,
+    LoginPage,
+    ForgotPassword,
+    ResetPassword,
+    Profile,
+    RegistrationPage,
+    NotFound404,
+    IngredientDetailPage,
+    FeedPage,
+    FeedOrderPage,
+    ProfileOrders,
+    ProfileOrderPage
+};

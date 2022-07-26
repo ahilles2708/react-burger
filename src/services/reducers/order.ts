@@ -1,18 +1,27 @@
+import { IOrderNewData } from '../../types';
+import { TCreateOrderActions } from '../actions/order';
 import { 
     CREATE_NEW_ORDER_REQUEST,
     CREATE_NEW_ORDER_FAILED,
     CREATE_NEW_ORDER_SUCCESS,
     RESET_ORDER
-} from '../actions/order';
+} from '../constants/order';
 
-const initialState = {
+export type TOrderState = {
+    orderRequest: boolean;
+    orderFailed: boolean;
+    openOrderModal: boolean;
+    orderNew: IOrderNewData | null;
+}
+
+const initialState: TOrderState = {
     orderRequest: false,
     orderFailed: false,
     openOrderModal: false,
     orderNew: null,
 }
 
-export const orderReducer = (state = initialState, action) => {
+export const orderReducer = (state = initialState, action: TCreateOrderActions) => {
     switch(action.type){
         case CREATE_NEW_ORDER_REQUEST: {
             return {

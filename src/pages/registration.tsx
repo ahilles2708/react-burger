@@ -1,22 +1,15 @@
 import React from "react";
 import { Input, Button, PasswordInput } from "@ya.praktikum/react-developer-burger-ui-components";
 import styles from './form.module.css';
-import { useDispatch, useSelector } from "react-redux";
+import { useDispatch, useSelector } from "../services/types/hooks";
 import { setRegistrationFormValue, userRegistration } from '../services/actions/user';
 import { Link, useLocation, Redirect } from 'react-router-dom';
-import { ILocation, ILocationBackground, ILocationStateFrom, IState } from "../types";
+import { ILocationStateFrom } from "../types";
 
 const RegistrationPage = () => {
-    const {
-        name,
-        email,
-        password,
-    } = useSelector((store: IState) => store.user.formRegistration);
-
-    const { isAuth, registrationRequest } = useSelector((store: IState) => store.user);
-
+    const { user } = useSelector(store => store);
+    const { isAuth, registrationRequest, formRegistration } = user;
     const { state } = useLocation<ILocationStateFrom>();
-
     const dispatch = useDispatch();
 
     const onFormChange = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -26,7 +19,7 @@ const RegistrationPage = () => {
 
     const onFormSubmit = (e: React.FormEvent<HTMLFormElement>) => {
         e.preventDefault();
-        dispatch(userRegistration());
+        dispatch(userRegistration(user));
     }
 
     if (isAuth) {
@@ -44,7 +37,7 @@ const RegistrationPage = () => {
                     placeholder={'Имя'}
                     onChange={onFormChange}
                     icon={'CurrencyIcon'}
-                    value={name}
+                    value={formRegistration.name}
                     name={'name'}
                     error={false}
                     errorText={'Ошибка'}
@@ -55,13 +48,13 @@ const RegistrationPage = () => {
                     placeholder={'E-mail'}
                     onChange={onFormChange}
                     icon={'CurrencyIcon'}
-                    value={email}
+                    value={formRegistration.email}
                     name={'email'}
                     error={false}
                     errorText={'Ошибка'}
                     size={'default'}
                 />
-                <PasswordInput onChange={onFormChange} value={password} name={'password'} />
+                <PasswordInput onChange={onFormChange} value={formRegistration.password} name={'password'} />
                 <Button type="primary" size="medium" disabled={registrationRequest}>
                     Зарегистрироваться
                 </Button>

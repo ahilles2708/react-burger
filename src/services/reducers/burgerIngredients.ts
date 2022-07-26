@@ -1,16 +1,24 @@
+import { IItemProps } from '../../types';
+import { TIngredientsDataActions } from '../actions/burgerIngredients';
 import {
     GET_INGREDIENTS_DATA,
     GET_INGREDIENTS_DATA_FAILED,
     GET_INGREDIENTS_DATA_SUCCESS,
-} from '../actions/burgerIngredients';
+} from '../constants/burgerIngredients';
 
-const initialState = {
+export type TIngredientsDataState = {
+    dataRequest: boolean;
+    dataFailed: boolean;
+    data: IItemProps[];
+}
+
+const initialState: TIngredientsDataState = {
     dataRequest: false,
     dataFailed: false,
     data: []
 }
 
-export const burgerIngredientsReducer = (state = initialState, action) => {
+export const burgerIngredientsReducer = (state = initialState, action: TIngredientsDataActions) => {
     switch(action.type){
         case GET_INGREDIENTS_DATA: {
             return {

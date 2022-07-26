@@ -1,3 +1,4 @@
+import { TUserActions } from "../actions/user";
 import {
     REGISTRATION_FORM_SET_VALUE,
     REGISTRATION_REQUEST,
@@ -23,9 +24,53 @@ import {
     RESET_PASSWORD_SUCCESS,
     RESET_PASSWORD_REQUEST,
     PASSWORD_RESET_FORM_SET_VALUE,
-} from "../actions/user";
+} from "../constants/user";
 
-const initialState = {
+export type TUserState = {
+    formRegistration: {
+        name: string;
+        email: string;
+        password: string;
+    };
+    registrationRequest: boolean;
+    registrationFailed: boolean;
+    formLogin: {
+        email: string;
+        password: string;
+    };
+    loginRequest: boolean;
+    loginFailed: boolean;
+    formProfile: {
+        name: string;
+        email: string;
+        password: string;
+    };
+    userInfoPatchRequest: boolean;
+    userInfoPatchFailed: boolean;
+    formPasswordForgot: {
+        email: string;
+    };
+    passwordForgotRequest: boolean;
+    passwordForgotFailed: boolean;
+    passwordForgotSuccess: boolean;
+    formPasswordReset: {
+        password: string;
+        token: string;
+
+    };
+    passwordResetRequest: boolean;
+    passwordResetFailed: boolean;
+    passwordResetSuccess: boolean;
+    info: {
+        name: string;
+        email: string;
+    },
+    isAuth: boolean;
+    userInfoRequest: boolean;
+    userInfoFailed: boolean;
+}
+
+const initialState: TUserState = {
     formRegistration: {
         name: '',
         email: '',
@@ -33,14 +78,12 @@ const initialState = {
     },
     registrationRequest: false,
     registrationFailed: false,
-
     formLogin: {
         email: '',
         password: '',
     },
     loginRequest: false,
     loginFailed: false,
-
     formProfile: {
         name: '',
         email: '',
@@ -48,14 +91,12 @@ const initialState = {
     },
     userInfoPatchRequest: false,
     userInfoPatchFailed: false,
-
     formPasswordForgot: {
         email: '',
     },
     passwordForgotRequest: false,
     passwordForgotFailed: false,
     passwordForgotSuccess: false,
-
     formPasswordReset: {
         password: '',
         token: '',
@@ -64,7 +105,6 @@ const initialState = {
     passwordResetRequest: false,
     passwordResetFailed: false,
     passwordResetSuccess: false,
-
     info: {
         name: '',
         email: '',
@@ -74,7 +114,7 @@ const initialState = {
     userInfoFailed: false,
 }
 
-export const userReducer = ( state = initialState, action) => {
+export const userReducer = ( state = initialState, action: TUserActions) => {
     switch(action.type){
         //заполняем форму регистрации
         case REGISTRATION_FORM_SET_VALUE: {

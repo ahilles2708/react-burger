@@ -1,0 +1,36 @@
+.orderBlock {
+    display: flex;
+    flex-direction: column;
+    justify-content: start;
+    width: 640px;
+    max-height: 500px;
+    overflow-y: auto;
+    padding-right: 20px;
+    box-sizing: border-box;
+}
+
+.blockNumber {
+    display: flex;
+    justify-content: center;
+}
+
+.blockName {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+}
+
+.blockBody {
+    display: flex;
+    flex-direction: column;
+}
+
+.blockFooter {
+    display: flex;
+    justify-content: space-between;
+}
+
+.blockPrice {
+    display: flex;
+    justify-content: space-between;
+}

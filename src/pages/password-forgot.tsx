@@ -2,17 +2,14 @@ import React, { useEffect } from "react";
 import { Input, Button } from "@ya.praktikum/react-developer-burger-ui-components";
 import styles from './form.module.css';
 import { useHistory } from 'react-router-dom';
-import { useSelector, useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "../services/types/hooks";
 import { passwordForgot, setPasswordForgotFormValue } from '../services/actions/user';
 import { Link, useLocation, Redirect } from 'react-router-dom';
-import { ILocationStateFrom, IState } from "../types";
+import { ILocationStateFrom } from "../types";
 
 const ForgotPassword = () => {
-
-    const {
-        email,
-    } = useSelector((store: IState) => store.user.formPasswordForgot);
-    const { isAuth, passwordForgotRequest, passwordForgotSuccess } = useSelector((store: IState) => store.user);
+    const { user } = useSelector(store => store);
+    const { isAuth, passwordForgotRequest, passwordForgotSuccess, formPasswordForgot } = user;
     const { state } = useLocation<ILocationStateFrom>();
     const dispatch = useDispatch();
     const history = useHistory();
@@ -22,7 +19,7 @@ const ForgotPassword = () => {
             if(passwordForgotSuccess){
                 history.replace({ pathname: '/reset-password' })
             };
-        }, [passwordForgotSuccess]
+        }, [passwordForgotSuccess, history]
     )
 
     const onFormChange = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -31,7 +28,7 @@ const ForgotPassword = () => {
 
     const onFormSubmit = (e: React.FormEvent<HTMLFormElement>) => {
         e.preventDefault();
-        dispatch(passwordForgot())
+        dispatch(passwordForgot(user))
     }
 
     if (isAuth) {
@@ -49,7 +46,7 @@ const ForgotPassword = () => {
                     placeholder={'Укажите e-mail'}
                     onChange={onFormChange}
                     icon={'CurrencyIcon'}
-                    value={email}
+                    value={formPasswordForgot.email}
                     name={'email'}
                     error={false}
                     errorText={'Ошибка'}

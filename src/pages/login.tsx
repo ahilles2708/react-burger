@@ -1,21 +1,14 @@
-import { useState } from "react";
 import { Input, Button } from "@ya.praktikum/react-developer-burger-ui-components";
 import styles from './form.module.css';
 import { Link, useLocation, Redirect } from 'react-router-dom';
-import { useDispatch } from "react-redux";
 import { userLogIn, setLoginFormValue } from "../services/actions/user";
-import { useSelector } from "react-redux";
 import { checkAccessToken } from "../utils/utils";
-import { ILocationStateFrom, IState } from "../types";
+import { ILocationStateFrom } from "../types";
+import { useDispatch, useSelector } from "../services/types/hooks";
 
 const LoginPage = () => {
-
-    const {
-        email,
-        password,
-    } = useSelector((store: IState) => store.user.formLogin);
-
-    const { isAuth, loginRequest } = useSelector((store: IState) => store.user);
+    const { user } = useSelector(store => store);
+    const { isAuth, loginRequest, formLogin } = user;
 
     const isAccessToken = checkAccessToken();
 
@@ -28,7 +21,7 @@ const LoginPage = () => {
 
     const onFormSubmit = (e: React.FormEvent<HTMLFormElement>) => {
         e.preventDefault();
-        dispatch(userLogIn());
+        dispatch(userLogIn(user));
     }
 
     if (isAuth && isAccessToken) {
@@ -46,7 +39,7 @@ const LoginPage = () => {
                     placeholder={'E-mail'}
                     onChange={onFormChange}
                     icon={'CurrencyIcon'}
-                    value={email}
+                    value={formLogin.email}
                     name={'email'}
                     error={false}
                     errorText={'Ошибка'}
@@ -57,7 +50,7 @@ const LoginPage = () => {
                     placeholder={'placeholder'}
                     onChange={onFormChange}
                     icon={'CurrencyIcon'}
-                    value={password}
+                    value={formLogin.password}
                     name={'password'}
                     error={false}
                     errorText={'Ошибка'}

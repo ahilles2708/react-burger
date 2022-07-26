@@ -1,0 +1,21 @@
+.section { 
+    width: 600px;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+.blockList {
+    height: calc(100vh - 220px);
+    overflow-y: auto;
+    display: block;
+}
+
+.cardGroup {
+    display: flex;
+    flex-wrap: wrap;
+    flex-direction: column;
+}
+
+.cardGroup a {
+    text-decoration: none;
+}
