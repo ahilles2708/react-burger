@@ -5,7 +5,7 @@ import styles from './app-header.module.css';
 const AppHeader = () => {
     const isMainPage = !!useRouteMatch({'path': '/', exact: true});
     const isProfile = !!useRouteMatch('/profile');
-    const isOrders = !!useRouteMatch('/orders-feed');
+    const isOrders = !!useRouteMatch('/feed');
 
     return(
         <header className={styles.header + ' pt-4 pb-4'}>
@@ -19,7 +19,7 @@ const AppHeader = () => {
                         <p className={' text text_type_main-default'}>Конструктор</p>
                     </NavLink>
                     <NavLink
-                        to="/profile/orders-feed"
+                        to="/feed"
                         className={(isActive) => isActive ? styles.headerButton + ' pl-5 pr-5 text_color_primary' : styles.headerButton + ' pl-5 pr-5 text_color_inactive'}
                         exact>
                         <ListIcon type={isOrders ? "primary" : "secondary"} />

@@ -3,3 +3,9 @@ export enum ETabs {
     FILLING = "filling",
     SAUCE = "sauce",
 }
+
+export const ORDER_STATUS = {
+    DONE: "done",
+    PENDING: "pending",
+    CREATED: "created"
+}

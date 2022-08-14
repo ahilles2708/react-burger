@@ -1,13 +1,13 @@
-import { useSelector } from 'react-redux';
-import { Route, Redirect, useLocation } from 'react-router-dom';
-import { IProtectedRouteProps, IState } from '../../types';
+import { useSelector } from "../../services/types/hooks";
+import { Route, Redirect } from 'react-router-dom';
+import { IProtectedRouteProps } from '../../types';
 import { checkAccessToken } from '../../utils/utils';
 
 const ProtectedRoute: React.FC<IProtectedRouteProps> = ({ path, exact, children }) => {
 
     const {
         isAuth,
-    } = useSelector((store: IState) => store.user);
+    } = useSelector(store => store.user);
     const isAccessToken = checkAccessToken();
 
     return (

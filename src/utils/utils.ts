@@ -1,7 +1,8 @@
 import { baseUrl } from "./constants";
 import jwt_decode from "jwt-decode";
-import { TCookieProps, TExpiredCookie } from "../types";
-import { RequestOptions } from "https";
+import { IItemProps, TBurgerStructure, TCookieProps, TExpiredCookie } from "../types";
+import { differenceInDays as diff, isSameDay as same, format, subDays, formatDistance } from 'date-fns';
+import { ru } from 'date-fns/locale'
 
 export function checkResponse(res: Response){
     return res.ok ? res.json() : res.json().then((err)=> Promise.reject(err));
@@ -90,4 +91,51 @@ export const checkAccessToken = () => {
       }
   }
   return accessToken ? true : false;
+}
+
+export const getBurgerStructure = (burgerIngredients: Array<IItemProps>) => {
+  let burgerStructure: TBurgerStructure = {
+      bun: null,
+      ingredients: {},
+      totalValue: 0
+  }
+
+  burgerIngredients.forEach(ingredient => {
+      if (ingredient.type === "bun") {
+          if (!burgerStructure.bun) {
+            burgerStructure.bun = ingredient
+            burgerStructure.totalValue += ingredient.price * 2;
+          }
+      } else {
+          if (!(ingredient._id in burgerStructure.ingredients))
+          burgerStructure.ingredients[ingredient._id] = { count: 0, ingredient: ingredient }
+          burgerStructure.ingredients[ingredient._id]["count"] += 1
+          burgerStructure.totalValue += ingredient.price;
+      }
+  })
+
+  return burgerStructure;
+};
+
+export const dateFormatConverter = (date: string) => {
+  const initDate = new Date(date);
+  const today = new Date();
+  const yesterday = subDays(today, 1);
+  const dayBeforeYesterday = subDays(today, 2);
+
+  let formattedDate = '';
+  if (same(initDate, today)) {
+      formattedDate = 'Сегодня';
+  } else if (same(initDate, yesterday)) {
+      formattedDate = 'Вчера';
+  } else if (same(initDate, dayBeforeYesterday)) {
+      formattedDate = 'Позавчера';
+  } else if (diff(today, initDate) <= 7) {
+      formattedDate = formatDistance(subDays(today, diff(today, initDate)), today, { addSuffix: true, locale: ru })
+  } else {
+      formattedDate = format(initDate, 'dd.MM.yyyy')
+  }
+  formattedDate += `, ${format(initDate, 'HH:mm')} i-${format(initDate, "O")}`;
+  
+  return formattedDate;
 }
