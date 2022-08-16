@@ -39,7 +39,7 @@ const IngredientCategory = forwardRef(({
                     items.map(
                         (item) => {
                             return(
-                                <li className={styles.itemIngredient + ' mb-8'} key={item._id}>
+                                <li className={styles.itemIngredient + ' mb-8'} key={item._id} data-type={captionID}>
                                     <BurgerIngredientsItem key={item._id} item={item} counter={itemsCounter[item._id]}/>
                                 </li>
                             )}

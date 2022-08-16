@@ -80,6 +80,7 @@ export interface IUserInfoFailed {
 export interface IUserInfoSuccess {
     readonly type: typeof USER_INFO_SUCCESS;
     readonly name: string;
+    readonly email: string;
 }
 
 export interface IUserInfoPatchRequest {

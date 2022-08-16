@@ -12,7 +12,6 @@ import { ETabs } from '../../enums';
 
 export default function BurgerIngredients() {
     const { data, dataRequest, dataFailed } = useSelector(store => store.ingredients);
-    const needModalOpen = useSelector(store => store.modal.data);
     const dispatch = useDispatch();
 
     const [bunsRef, inViewBuns] = useInView({
@@ -86,9 +85,6 @@ export default function BurgerIngredients() {
                     <IngredientCategory caption={name} captionID={id} items={items} ref={ref} key={index} />
                 )}
             </div>
-            {needModalOpen && <Modal caption="Детали ингредиента" toggle={closeModal}>
-                <IngredientDetails/>
-            </Modal>}
         </section>
     );
 };

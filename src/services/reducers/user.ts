@@ -181,7 +181,7 @@ export const userReducer = ( state = initialState, action: TUserActions) => {
                 ...state,
                 info: {
                     name: action.name,
-                    email: action.name,
+                    email: action.email,
                 },
                 isAuth: true,
                 userInfoRequest: false,
