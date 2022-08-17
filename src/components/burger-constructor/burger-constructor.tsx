@@ -47,7 +47,7 @@ export default function BurgerConstructor () {
         if ( !bun || !items ){
             return;
         }
-        if ( isAuth && checkAccessToken){
+        if ( isAuth ){
             dispatch(
                 createOrder({
                     "ingredients" : [

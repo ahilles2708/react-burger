@@ -53,11 +53,19 @@ const BurgerConstructorElement: React.FC<IBurgerConstructorElementProps> = ({ it
     
     drag(drop(ref));
 
+    let type = '';
+    if(item.type == 'main'){
+        type = 'filling';
+    } else {
+        type = item.type;
+    }
+
     return(
         <li 
             className={styles.fillingItem + ' mb-4'}
             ref={ref}
             style={{opacity}}
+            data-constructor-type={type}
         >
             <DragIcon type="primary"/>
             <ConstructorElement 
